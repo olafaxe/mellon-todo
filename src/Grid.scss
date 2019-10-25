@@ -1,0 +1,15 @@
+.container__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 5% 1fr 5%;
+  grid-template-areas:
+    "header header header"
+    ". content ."
+    "footer footer footer";
+}
+
+.container__content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+}
