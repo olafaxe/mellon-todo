@@ -1,29 +1,51 @@
 import React from "react";
+import Input from "../Input/Input";
 import "./Todo.scss";
-import { tsModuleDeclaration } from "@babel/types";
 
-const Todo = ({ todo, selectedFilter }) => {
-  console.log(todo);
+const Todo = ({
+  remove,
+  editHandle,
+  canEdit,
+  confirmEdit,
+  checkHandle,
+  checkValue,
+  ki,
+  id,
+  title,
+  content,
+  getData,
+  inputOld
+}) => {
   return (
-    <>
-      {todo.map(todo => {
-        if (selectedFilter === "Alla") {
-          return (
-            <div className="container__todo" key={todo.id.toString()}>
-              <h1>{todo.title}</h1>
-              <p>{todo.content}</p>
-            </div>
-          );
-        } else if (todo.filter === selectedFilter) {
-          return (
-            <div className="container__todo" key={todo.id.toString()}>
-              <h1>{todo.title}</h1>
-              <p>{todo.content}</p>
-            </div>
-          );
-        }
-      })}
-    </>
+    <div className="container__todo" key={ki} id={id}>
+      <div className="todo--content">
+        {canEdit ? (
+          <Input
+            label={"todo--edit"}
+            id={"todo--edit"}
+            getData={getData}
+            def={inputOld}
+          ></Input>
+        ) : !checkValue ? (
+          <p onClick={checkHandle} id={id}>
+            {content}
+          </p>
+        ) : (
+          <s onClick={checkHandle} id={id}>
+            {content}
+          </s>
+        )}
+      </div>
+
+      <div className="todo--icons">
+        {canEdit ? (
+          <i onClick={confirmEdit} id={id} className="far fa-check-circle"></i>
+        ) : (
+          <i onClick={editHandle} id={id} className="fas fa-edit"></i>
+        )}
+        <i onClick={remove} id={id} className="fas fa-trash"></i>
+      </div>
+    </div>
   );
 };
 

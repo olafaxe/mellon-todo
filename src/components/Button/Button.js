@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Button = props => {
+const Button = ({ addHandler, type }) => {
   return (
     <>
-      <button onClick={props.clickTest}>Klicka på mig</button>
+      <button onClick={addHandler}>{type}</button>
     </>
   );
 };

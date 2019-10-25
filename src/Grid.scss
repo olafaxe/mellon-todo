@@ -1,15 +1,44 @@
+html,
+body {
+  height: 100%;
+}
 .container__grid {
+  height: 100%;
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 5% 1fr 5%;
+  grid-template-columns: 5px 1fr 5px;
+  grid-template-rows: 50px 75px 50px 1fr (1fr/2);
   grid-template-areas:
     "header header header"
+    ". add ."
+    ". filter ."
     ". content ."
-    "footer footer footer";
+    ". footer .";
+}
+.container__title {
+  grid-area: header;
+  display: flex;
+}
+.container__add {
+  grid-area: add;
+  display: flex;
 }
 
+.container__filter {
+  grid-area: filter;
+  display: flex;
+}
 .container__content {
   grid-area: content;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
+}
+.container__footer {
+  grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  align-self: end;
+  grid-row-start: 5;
+  grid-row-end: 5;
 }

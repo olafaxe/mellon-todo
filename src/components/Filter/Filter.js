@@ -1,13 +1,17 @@
 import React from "react";
+import "./Filter.scss";
 
 const Filter = ({ chosenFilter }) => {
   return (
-    <>
-      <select onChange={chosenFilter}>
-        <option>Alla</option>
-        <option>Lätt</option>
-      </select>
-    </>
+    <div className="container__filter">
+      <div className="filter__container">
+        <select onChange={chosenFilter}>
+          <option>All</option>
+          <option>Easy</option>
+          <option>Hard</option>
+        </select>
+      </div>
+    </div>
   );
 };
 

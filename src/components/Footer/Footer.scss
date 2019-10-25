@@ -1,0 +1,28 @@
+.container__footer {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.footer--content {
+  height: 1009%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  flex: 1;
+  width: 265px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 2px -2px 2px 0px #1c581b75;
+  background-color: #d0e2d6;
+
+  p {
+    margin: 5px;
+    margin-bottom: 0px;
+    padding: 5px;
+    color: #1c581b;
+    text-shadow: 1px 1px #edf0e7;
+  }
+}

@@ -1,0 +1,19 @@
+.container__filter {
+  align-items: center;
+  justify-content: center;
+  select {
+    width: 335px;
+  }
+}
+
+.filter__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 365px;
+  height: 50px;
+  background-color: #4b4e4c;
+  box-shadow: 2px -2px 0px 0px #01661d;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}

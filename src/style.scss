@@ -1,0 +1,35 @@
+html {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #c4d8cb;
+}
+$sans-serif: "Source Sans Pro", Helvetica, Verdana, sans-serif;
+$press-start: "Press Start 2P", cursive;
+$ubuntu: "Ubuntu", sans-serif;
+
+$light: 300;
+$normal: 400;
+$semibold: 500;
+$bold: 700;
+
+p,
+s {
+  margin: 0px;
+  padding: 0px;
+  font-family: $ubuntu;
+  font-size: 20px;
+}
+button {
+  font-family: $press-start;
+  font-size: 10px;
+  font-weight: $light;
+}
+option {
+  font-family: $ubuntu;
+  font-weight: $light;
+}

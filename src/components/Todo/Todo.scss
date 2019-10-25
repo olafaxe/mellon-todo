@@ -1,6 +1,52 @@
 .container__todo {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  background-color: lightgray;
+  width: 365px;
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #5ca871;
+  box-shadow: 2px -2px 0px 0px #01661d;
+
+  p {
+    margin: 0;
+    padding: 0;
+    color: #f8f8f8;
+  }
+  s {
+    color: #c7f861;
+  }
+}
+
+.container__todo:nth-child(even) {
+  background-color: #73a782;
+}
+
+.todo--content {
+  margin-left: 10px;
+  flex: 100;
+  overflow: hidden;
+  input {
+    width: 100%;
+  }
+}
+.todo--icons {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-around;
+  height: 100%;
+  i {
+    margin: 5px;
+  }
+  i:nth-child(1) {
+    flex: 1;
+    color: #0e301d;
+  }
+  i:nth-child(2) {
+    color: #df0000be;
+  }
 }
