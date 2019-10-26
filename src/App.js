@@ -112,7 +112,8 @@ const App = props => {
 
   const getData = e => {
     if (e.target.id === "todo--edit") {
-      setInputEdit(e.target.value);
+      setInputEdit(inputOld ? inputOld + e.target.value : e.target.value);
+      setInputOld();
     } else {
       setInputNew(e.target.value);
     }

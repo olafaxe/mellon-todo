@@ -11,7 +11,6 @@ const Todo = ({
   checkValue,
   ki,
   id,
-  title,
   content,
   getData,
   inputOld

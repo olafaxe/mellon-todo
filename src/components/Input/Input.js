@@ -8,8 +8,9 @@ const Input = ({ label, id, type, getData, def }) => {
           onChange={getData}
           id={id}
           type={type}
-          placeholder={def ? def : null}
+          // placeholder={def ? def : null}
           maxLength={30}
+          value={def}
         ></input>
       </label>
     </>
