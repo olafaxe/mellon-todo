@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/mellon-todo/precache-manifest.b6134412f9190d1a93c34fbfc53ee122.js"
+  "/mellon-todo/precache-manifest.353822a8c21e2b33d1654e534ef0902f.js"
 );
 
 self.addEventListener('message', (event) => {
