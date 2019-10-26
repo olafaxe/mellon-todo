@@ -24,6 +24,13 @@ s {
   font-family: $ubuntu;
   font-size: 20px;
 }
+@media only screen and(max-width: 400px) {
+  p,
+  s {
+    font-size: 15px;
+  }
+}
+
 button {
   font-family: $press-start;
   font-size: 10px;

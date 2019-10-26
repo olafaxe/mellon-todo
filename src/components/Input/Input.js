@@ -8,7 +8,7 @@ const Input = ({ label, id, type, getData, def }) => {
           onChange={getData}
           id={id}
           type={type}
-          maxLength={30}
+          maxLength={40}
           value={def}
         ></input>
       </label>
