@@ -21,7 +21,7 @@ const TodoAdd = ({ addHandler, getData, getDifficulty, inputNew }) => {
             id={"taskdiff"}
             getDifficulty={getDifficulty}
           ></Selector>
-          <Button addHandler={addHandler} type={"Seed"}></Button>
+          <Button handler={addHandler} type={"Seed"}></Button>
         </form>
       </div>
     </div>

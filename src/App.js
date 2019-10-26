@@ -9,13 +9,14 @@ import Footer from "./components/Footer/Footer";
 
 import "./style.scss";
 
-const App = props => {
+const App = () => {
   const [todo, setTodo] = useState([
     {
       id: 1,
       filter: "HARD",
       checked: false,
       edit: false,
+      delete: false,
       content: "Be a good person"
     },
     {
@@ -24,6 +25,7 @@ const App = props => {
       filter: "HARD",
       checked: false,
       edit: false,
+      delete: false,
       content: "Read something cool"
     },
     {
@@ -31,6 +33,7 @@ const App = props => {
       filter: "EASY",
       checked: false,
       edit: false,
+      delete: false,
       content: "Think about Charlie"
     },
     {
@@ -38,6 +41,7 @@ const App = props => {
       filter: "HARD",
       checked: false,
       edit: false,
+      delete: false,
       content: "Survive in A-team"
     }
   ]);
@@ -50,16 +54,40 @@ const App = props => {
   const [difficulty, setDifficulty] = useState("EASY");
   const [filter, setFilter] = useState("ALL");
 
+  //*************** */
+  //*********FILTER */
+  //*************** */
   const filterHandle = e => {
     let upperFilter = e.target.value.toUpperCase();
     setFilter(upperFilter);
   };
 
+  //*************** */
+  //*********DELETE */
+  //*************** */
   const removeHandle = e => {
+    const deleteTodo = todo.map(todo => {
+      if (Number(e.target.id) === todo.id) {
+        todo.delete = !todo.delete;
+        return todo;
+      }
+      return todo;
+    });
+    setTodo(deleteTodo);
+  };
+
+  const confirmRemove = e => {
+    if (e.target.innerText === "NO") {
+      removeHandle(e);
+      return;
+    }
     const newTodos = todo.filter(todo => Number(e.target.id) !== todo.id);
     setTodo(newTodos);
   };
 
+  //*************** */
+  //*********EDIT ***/
+  //*************** */
   const editHandle = e => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
@@ -88,6 +116,9 @@ const App = props => {
     setWall(!wall);
   };
 
+  //*************** */
+  //*********CHECK */
+  //*************** */
   const checkHandle = e => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
@@ -98,6 +129,9 @@ const App = props => {
     setTodo(checkedTodo);
   };
 
+  //*************** */
+  //*********ADDING */
+  //*************** */
   const addHandler = e => {
     e.preventDefault();
     if (!inputNew) {
@@ -111,10 +145,13 @@ const App = props => {
         content: inputNew
       });
     }
-    e.target.parentElement.children[0].children[0].value = "";
+    e.target.parentElement.parentElement.children[0].children[0].value = "";
     setInputNew(null);
   };
 
+  //*************** */
+  //*********DATA ***/
+  //*************** */
   const getData = e => {
     if (e.target.id === "todo--edit") {
       setInputEdit(inputOld ? inputOld + e.target.value : e.target.value);
@@ -128,12 +165,18 @@ const App = props => {
     setDifficulty(e.target.value.toUpperCase());
   };
 
+  //*************** */
+  //****USE EFFECTS */
+  //*************** */
   useEffect(() => {
     if (!addTodo) {
       return;
     }
     setTodo([addTodo, ...todo]);
   }, [addTodo]);
+
+  //*************** */
+  //*** RETURN **** */
 
   return (
     <div className="container__grid">
@@ -149,7 +192,8 @@ const App = props => {
         <Todos
           todo={todo}
           selectedFilter={filter}
-          remove={removeHandle}
+          removeHandle={removeHandle}
+          confirmRemove={confirmRemove}
           editHandle={editHandle}
           confirmEdit={confirmEdit}
           checkHandle={checkHandle}

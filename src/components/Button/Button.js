@@ -1,9 +1,13 @@
 import React from "react";
 
-const Button = ({ addHandler, type }) => {
+const Button = ({ handler, type, id, value }) => {
   return (
     <>
-      <button onClick={addHandler}>{type}</button>
+      <button onClick={handler}>
+        <p value={value} id={id}>
+          {type}
+        </p>
+      </button>
     </>
   );
 };

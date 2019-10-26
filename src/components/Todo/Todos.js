@@ -5,14 +5,14 @@ import "./Todo.scss";
 const Todos = ({
   todo,
   selectedFilter,
-  remove,
+  removeHandle,
+  confirmRemove,
   editHandle,
-  canEdit,
   confirmEdit,
   checkHandle,
   getData,
   inputOld,
-  wall = { wall }
+  wall
 }) => {
   return (
     <>
@@ -20,7 +20,9 @@ const Todos = ({
         if (selectedFilter === "ALL") {
           return (
             <Todo
-              remove={remove}
+              removeHandle={removeHandle}
+              confirmRemove={confirmRemove}
+              willRemove={todo.delete}
               editHandle={editHandle}
               canEdit={todo.edit}
               confirmEdit={confirmEdit}
@@ -35,10 +37,11 @@ const Todos = ({
             ></Todo>
           );
         } else if (todo.filter === selectedFilter) {
-          console.log(selectedFilter);
           return (
             <Todo
-              remove={remove}
+              removeHandle={removeHandle}
+              confirmRemove={confirmRemove}
+              willRemove={todo.delete}
               editHandle={editHandle}
               canEdit={todo.edit}
               confirmEdit={confirmEdit}
