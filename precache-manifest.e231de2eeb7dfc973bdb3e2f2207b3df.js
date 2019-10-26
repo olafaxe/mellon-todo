@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ebf0375a2c2666ba44d680ee06ba756b",
+    "revision": "e6eb10eca3a6af6cdc67b821674c8cc7",
     "url": "/mellon-todo/index.html"
   },
   {
-    "revision": "9c70b18b4a7078e184fe",
-    "url": "/mellon-todo/static/css/main.fdf14fdc.chunk.css"
+    "revision": "6805d63fa28588d115ec",
+    "url": "/mellon-todo/static/css/main.720c1260.chunk.css"
   },
   {
     "revision": "2a4bf882b23148dc051c",
     "url": "/mellon-todo/static/js/2.bd911c5e.chunk.js"
   },
   {
-    "revision": "9c70b18b4a7078e184fe",
-    "url": "/mellon-todo/static/js/main.c7aae17e.chunk.js"
+    "revision": "6805d63fa28588d115ec",
+    "url": "/mellon-todo/static/js/main.ad5a8812.chunk.js"
   },
   {
     "revision": "a67466bf95a60c6354a1",
