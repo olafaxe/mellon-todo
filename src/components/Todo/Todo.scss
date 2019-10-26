@@ -65,14 +65,19 @@
   align-items: stretch;
   justify-content: space-around;
   height: 100%;
+
   i {
     margin: 5px;
   }
-  i:nth-child(1) {
-    flex: 1;
-    color: #0e301d;
-  }
+
   i:nth-child(2) {
     color: #df0000be;
+  }
+  .fa-edit {
+    color: #e4ffe6;
+  }
+  .fa-check-circle {
+    width: 18px;
+    color: #7aff7a;
   }
 }
