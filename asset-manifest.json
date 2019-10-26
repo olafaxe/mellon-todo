@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/mellon-todo/static/css/main.35f10da5.chunk.css",
-    "main.js": "/mellon-todo/static/js/main.9e271a1f.chunk.js",
-    "main.js.map": "/mellon-todo/static/js/main.9e271a1f.chunk.js.map",
+    "main.css": "/mellon-todo/static/css/main.fdf14fdc.chunk.css",
+    "main.js": "/mellon-todo/static/js/main.c7aae17e.chunk.js",
+    "main.js.map": "/mellon-todo/static/js/main.c7aae17e.chunk.js.map",
     "runtime-main.js": "/mellon-todo/static/js/runtime-main.feee9863.js",
     "runtime-main.js.map": "/mellon-todo/static/js/runtime-main.feee9863.js.map",
     "static/js/2.bd911c5e.chunk.js": "/mellon-todo/static/js/2.bd911c5e.chunk.js",
     "static/js/2.bd911c5e.chunk.js.map": "/mellon-todo/static/js/2.bd911c5e.chunk.js.map",
     "index.html": "/mellon-todo/index.html",
-    "precache-manifest.595732c966eaa047d4bd7952a4b481c9.js": "/mellon-todo/precache-manifest.595732c966eaa047d4bd7952a4b481c9.js",
+    "precache-manifest.ac9dd99e6da106f8e8fdafb120359b78.js": "/mellon-todo/precache-manifest.ac9dd99e6da106f8e8fdafb120359b78.js",
     "service-worker.js": "/mellon-todo/service-worker.js",
-    "static/css/main.35f10da5.chunk.css.map": "/mellon-todo/static/css/main.35f10da5.chunk.css.map"
+    "static/css/main.fdf14fdc.chunk.css.map": "/mellon-todo/static/css/main.fdf14fdc.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.feee9863.js",
     "static/js/2.bd911c5e.chunk.js",
-    "static/css/main.35f10da5.chunk.css",
-    "static/js/main.9e271a1f.chunk.js"
+    "static/css/main.fdf14fdc.chunk.css",
+    "static/js/main.c7aae17e.chunk.js"
   ]
 }
