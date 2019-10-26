@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/mellon-todo/static/css/main.a396f417.chunk.css",
-    "main.js": "/mellon-todo/static/js/main.ad5a8812.chunk.js",
-    "main.js.map": "/mellon-todo/static/js/main.ad5a8812.chunk.js.map",
+    "main.css": "/mellon-todo/static/css/main.105a486d.chunk.css",
+    "main.js": "/mellon-todo/static/js/main.f4514ee0.chunk.js",
+    "main.js.map": "/mellon-todo/static/js/main.f4514ee0.chunk.js.map",
     "runtime-main.js": "/mellon-todo/static/js/runtime-main.feee9863.js",
     "runtime-main.js.map": "/mellon-todo/static/js/runtime-main.feee9863.js.map",
-    "static/js/2.bd911c5e.chunk.js": "/mellon-todo/static/js/2.bd911c5e.chunk.js",
-    "static/js/2.bd911c5e.chunk.js.map": "/mellon-todo/static/js/2.bd911c5e.chunk.js.map",
+    "static/js/2.f90f2abf.chunk.js": "/mellon-todo/static/js/2.f90f2abf.chunk.js",
+    "static/js/2.f90f2abf.chunk.js.map": "/mellon-todo/static/js/2.f90f2abf.chunk.js.map",
     "index.html": "/mellon-todo/index.html",
-    "precache-manifest.353822a8c21e2b33d1654e534ef0902f.js": "/mellon-todo/precache-manifest.353822a8c21e2b33d1654e534ef0902f.js",
+    "precache-manifest.0068231e0fc143753b764d6b530e432f.js": "/mellon-todo/precache-manifest.0068231e0fc143753b764d6b530e432f.js",
     "service-worker.js": "/mellon-todo/service-worker.js",
-    "static/css/main.a396f417.chunk.css.map": "/mellon-todo/static/css/main.a396f417.chunk.css.map"
+    "static/css/main.105a486d.chunk.css.map": "/mellon-todo/static/css/main.105a486d.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.feee9863.js",
-    "static/js/2.bd911c5e.chunk.js",
-    "static/css/main.a396f417.chunk.css",
-    "static/js/main.ad5a8812.chunk.js"
+    "static/js/2.f90f2abf.chunk.js",
+    "static/css/main.105a486d.chunk.css",
+    "static/js/main.f4514ee0.chunk.js"
   ]
 }
