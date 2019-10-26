@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "./Grid.scss";
 import Content from "./components/Content/Content";
-import Todos from "./components/Todo/Todos";
+import TodoFilter from "./components/TodoFilter/TodoFilter";
 import Filter from "./components/Filter/Filter";
 import TodoAdd from "./components/TodoAdd/TodoAdd";
-import MellonTitle from "./components/MellonTitle/MellonTitle";
+import Title from "./components/Title/Title";
 import Footer from "./components/Footer/Footer";
 
-import "./style.scss";
+import "./sass/Style.scss";
+import "./sass/Grid.scss";
 
 const App = () => {
   const [todo, setTodo] = useState([
@@ -21,7 +21,6 @@ const App = () => {
     },
     {
       id: 2,
-
       filter: "HARD",
       checked: false,
       edit: false,
@@ -46,26 +45,26 @@ const App = () => {
     }
   ]);
 
-  const [addTodo, setAddTodo] = useState();
-  const [inputNew, setInputNew] = useState();
-  const [inputOld, setInputOld] = useState();
-  const [inputEdit, setInputEdit] = useState();
-  const [wall, setWall] = useState(false);
-  const [difficulty, setDifficulty] = useState("EASY");
-  const [filter, setFilter] = useState("ALL");
+  const [addTodoSt, setAddTodoSt] = useState();
+  const [inputNewSt, setInputNewSt] = useState();
+  const [inputOldSt, setInputOldSt] = useState();
+  const [inputEditSt, setInputEditSt] = useState();
+  const [editBarrierSt, setEditBarrierSt] = useState(false);
+  const [todoDifficultySt, setTodoDifficultySt] = useState("EASY");
+  const [selectedFilterSt, setSelectedFilterSt] = useState("ALL");
 
   //*************** */
   //*********FILTER */
   //*************** */
-  const filterHandle = e => {
+  const filterHandleFu = e => {
     let upperFilter = e.target.value.toUpperCase();
-    setFilter(upperFilter);
+    setSelectedFilterSt(upperFilter);
   };
 
   //*************** */
   //*********DELETE */
   //*************** */
-  const removeHandle = e => {
+  const removeHandleFu = e => {
     const deleteTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.delete = !todo.delete;
@@ -76,9 +75,9 @@ const App = () => {
     setTodo(deleteTodo);
   };
 
-  const confirmRemove = e => {
+  const removeConfirmFu = e => {
     if (e.target.innerText === "NO") {
-      removeHandle(e);
+      removeHandleFu(e);
       return;
     }
     const newTodos = todo.filter(todo => Number(e.target.id) !== todo.id);
@@ -88,13 +87,13 @@ const App = () => {
   //*************** */
   //*********EDIT ***/
   //*************** */
-  const editHandle = e => {
+  const editHandleFu = e => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
-        setInputEdit(inputOld ? inputOld : todo.content);
-        setInputOld(!inputOld ? todo.content : null);
-        setWall(!wall);
+        setInputEditSt(inputOldSt ? inputOldSt : todo.content);
+        setInputOldSt(!inputOldSt ? todo.content : null);
+        setEditBarrierSt(!editBarrierSt);
         return todo;
       }
       return todo;
@@ -102,24 +101,24 @@ const App = () => {
     setTodo(editTodo);
   };
 
-  const confirmEdit = e => {
+  const editConfirmFu = e => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
-        todo.content = inputEdit ? inputEdit : inputOld;
+        todo.content = inputEditSt ? inputEditSt : inputOldSt;
       }
 
       return todo;
     });
     setTodo(editTodo);
-    setInputOld(null);
-    setWall(!wall);
+    setInputOldSt(null);
+    setEditBarrierSt(!editBarrierSt);
   };
 
   //*************** */
   //*********CHECK */
   //*************** */
-  const checkHandle = e => {
+  const checkHandleFu = e => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
@@ -132,77 +131,77 @@ const App = () => {
   //*************** */
   //*********ADDING */
   //*************** */
-  const addHandler = e => {
+  const addHandleFu = e => {
     e.preventDefault();
-    if (!inputNew) {
+    if (!inputNewSt) {
       return;
     } else {
-      setAddTodo({
+      setAddTodoSt({
         id: Math.floor(Math.random() * 10000),
-        filter: difficulty,
+        filter: todoDifficultySt,
         checked: false,
         edit: false,
-        content: inputNew
+        content: inputNewSt
       });
     }
     e.target.parentElement.parentElement.children[0].children[0].value = "";
-    setInputNew(null);
+    setInputNewSt(null);
   };
 
   //*************** */
   //*********DATA ***/
   //*************** */
-  const getData = e => {
+  const getDataFu = e => {
     if (e.target.id === "todo--edit") {
-      setInputEdit(inputOld ? inputOld + e.target.value : e.target.value);
-      setInputOld(null);
+      setInputEditSt(inputOldSt ? inputOldSt + e.target.value : e.target.value);
+      setInputOldSt(null);
     } else {
-      setInputNew(e.target.value);
+      setInputNewSt(e.target.value);
     }
   };
 
-  const getDifficulty = e => {
-    setDifficulty(e.target.value.toUpperCase());
+  const getDifficultyFu = e => {
+    setTodoDifficultySt(e.target.value.toUpperCase());
   };
 
   //*************** */
   //****USE EFFECTS */
   //*************** */
   useEffect(() => {
-    if (!addTodo) {
+    if (!addTodoSt) {
       return;
     }
-    setTodo([addTodo, ...todo]);
-  }, [addTodo]);
+    setTodo([addTodoSt, ...todo]);
+  }, [addTodoSt]);
 
   //*************** */
   //*** RETURN **** */
 
   return (
     <div className="container__grid">
-      <MellonTitle></MellonTitle>
+      <Title />
       <TodoAdd
-        addHandler={addHandler}
-        getData={getData}
-        getDifficulty={getDifficulty}
-        inputNew={inputNew}
-      ></TodoAdd>
-      <Filter chosenFilter={filterHandle}></Filter>
+        addHandleFu={addHandleFu}
+        getDataFu={getDataFu}
+        getDifficultyFu={getDifficultyFu}
+        inputNewSt={inputNewSt}
+      />
+      <Filter filterHandleFu={filterHandleFu} />
       <Content>
-        <Todos
+        <TodoFilter
           todo={todo}
-          selectedFilter={filter}
-          removeHandle={removeHandle}
-          confirmRemove={confirmRemove}
-          editHandle={editHandle}
-          confirmEdit={confirmEdit}
-          checkHandle={checkHandle}
-          getData={getData}
-          inputOld={inputOld}
-          wall={wall}
-        ></Todos>
+          checkHandleFu={checkHandleFu}
+          editConfirmFu={editConfirmFu}
+          editHandleFu={editHandleFu}
+          getDataFu={getDataFu}
+          removeConfirmFu={removeConfirmFu}
+          removeHandleFu={removeHandleFu}
+          editBarrierSt={editBarrierSt}
+          inputOldSt={inputOldSt}
+          selectedFilterSt={selectedFilterSt}
+        />
       </Content>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 };

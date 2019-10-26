@@ -1,11 +1,11 @@
 import React from "react";
 import "./Filter.scss";
 
-const Filter = ({ chosenFilter }) => {
+const Filter = ({ filterHandleFu }) => {
   return (
     <div className="container__filter">
       <div className="filter__container">
-        <select onChange={chosenFilter}>
+        <select onChange={filterHandleFu}>
           <option>All</option>
           <option>Easy</option>
           <option>Hard</option>

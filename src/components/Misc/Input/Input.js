@@ -1,11 +1,11 @@
 import React from "react";
 
-const Input = ({ label, id, type, getData, def }) => {
+const Input = ({ label, id, type, getDataFu, def }) => {
   return (
     <>
       <label htmlFor={label}>
         <input
-          onChange={getData}
+          onChange={getDataFu}
           id={id}
           type={type}
           maxLength={40}

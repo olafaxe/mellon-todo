@@ -1,9 +1,9 @@
 import React from "react";
 import mellon from "../../images/mellon.png";
 
-import "./Mellon.scss";
+import "./Title.scss";
 
-const MellonTitle = () => {
+const Title = () => {
   return (
     <div className="container__title">
       <img className="title--image" src={mellon}></img>
@@ -11,4 +11,4 @@ const MellonTitle = () => {
   );
 };
 
-export default MellonTitle;
+export default Title;

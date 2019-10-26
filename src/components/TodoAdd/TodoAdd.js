@@ -1,10 +1,10 @@
 import React from "react";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
-import Selector from "../Selector/Selector";
+import Button from "../Misc/Button/Button";
+import Input from "../Misc/Input/Input";
+import Selector from "../Misc/Selector/Selector";
 import "./TodoAdd.scss";
 
-const TodoAdd = ({ addHandler, getData, getDifficulty, inputNew }) => {
+const TodoAdd = ({ addHandleFu, getDataFu, getDifficultyFu, inputNewSt }) => {
   return (
     <div className="container__add">
       <div className="add--todo__container">
@@ -13,15 +13,15 @@ const TodoAdd = ({ addHandler, getData, getDifficulty, inputNew }) => {
             label={"taskname"}
             id={"taskname"}
             type={"text"}
-            getData={getData}
-            def={inputNew}
-          ></Input>
+            getDataFu={getDataFu}
+            def={inputNewSt}
+          />
           <Selector
             label={"taskdiff"}
             id={"taskdiff"}
-            getDifficulty={getDifficulty}
-          ></Selector>
-          <Button handler={addHandler} type={"Seed"}></Button>
+            getDifficultyFu={getDifficultyFu}
+          />
+          <Button handlerFu={addHandleFu} type={"Seed"} />
         </form>
       </div>
     </div>

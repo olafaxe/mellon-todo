@@ -1,10 +1,10 @@
 import React from "react";
 
-const Button = ({ handler, type, id, value }) => {
+const Button = ({ handlerFu, type, todoId, value }) => {
   return (
     <>
-      <button onClick={handler}>
-        <p value={value} id={id}>
+      <button onClick={handlerFu}>
+        <p value={value} id={todoId}>
           {type}
         </p>
       </button>

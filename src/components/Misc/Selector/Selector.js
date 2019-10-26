@@ -1,10 +1,10 @@
 import React from "react";
 
-const Selector = ({ label, id, getDifficulty }) => {
+const Selector = ({ label, id, getDifficultyFu }) => {
   return (
     <>
       <label htmlFor={label}></label>
-      <select onChange={getDifficulty} id={id}>
+      <select onChange={getDifficultyFu} id={id}>
         <option>EASY</option>
         <option>HARD</option>
       </select>
