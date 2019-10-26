@@ -46,12 +46,12 @@ const App = props => {
   const [inputNew, setInputNew] = useState();
   const [inputOld, setInputOld] = useState();
   const [inputEdit, setInputEdit] = useState();
+  const [wall, setWall] = useState(false);
   const [difficulty, setDifficulty] = useState("EASY");
   const [filter, setFilter] = useState("ALL");
 
   const filterHandle = e => {
     let upperFilter = e.target.value.toUpperCase();
-    console.log(upperFilter);
     setFilter(upperFilter);
   };
 
@@ -64,7 +64,10 @@ const App = props => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
-        setInputOld(todo.content);
+        setInputEdit(inputOld ? inputOld : todo.content);
+        setInputOld(!inputOld ? todo.content : null);
+        setWall(!wall);
+        return todo;
       }
       return todo;
     });
@@ -77,10 +80,12 @@ const App = props => {
         todo.edit = !todo.edit;
         todo.content = inputEdit ? inputEdit : inputOld;
       }
-      console.log(todo);
+
       return todo;
     });
     setTodo(editTodo);
+    setInputOld(null);
+    setWall(!wall);
   };
 
   const checkHandle = e => {
@@ -113,7 +118,7 @@ const App = props => {
   const getData = e => {
     if (e.target.id === "todo--edit") {
       setInputEdit(inputOld ? inputOld + e.target.value : e.target.value);
-      setInputOld();
+      setInputOld(null);
     } else {
       setInputNew(e.target.value);
     }
@@ -149,6 +154,7 @@ const App = props => {
           checkHandle={checkHandle}
           getData={getData}
           inputOld={inputOld}
+          wall={wall}
         ></Todos>
       </Content>
       <Footer></Footer>

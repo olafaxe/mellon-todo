@@ -13,7 +13,8 @@ const Todo = ({
   id,
   content,
   getData,
-  inputOld
+  inputOld,
+  wall
 }) => {
   return (
     <div className="container__todo" key={ki} id={id}>
@@ -40,7 +41,11 @@ const Todo = ({
         {canEdit ? (
           <i onClick={confirmEdit} id={id} className="far fa-check-circle"></i>
         ) : (
-          <i onClick={editHandle} id={id} className="fas fa-edit"></i>
+          <i
+            onClick={!wall ? editHandle : null}
+            id={id}
+            className="fas fa-edit"
+          ></i>
         )}
         <i onClick={remove} id={id} className="fas fa-trash"></i>
       </div>

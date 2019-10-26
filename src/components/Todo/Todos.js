@@ -11,10 +11,9 @@ const Todos = ({
   confirmEdit,
   checkHandle,
   getData,
-  inputOld
+  inputOld,
+  wall = { wall }
 }) => {
-  console.log(todo);
-
   return (
     <>
       {todo.map(todo => {
@@ -32,6 +31,7 @@ const Todos = ({
               checkValue={todo.checked}
               getData={getData}
               inputOld={inputOld}
+              wall={wall}
             ></Todo>
           );
         } else if (todo.filter === selectedFilter) {
@@ -49,6 +49,7 @@ const Todos = ({
               checkValue={todo.checked}
               getData={getData}
               inputOld={inputOld}
+              wall={wall}
             ></Todo>
           );
         }
