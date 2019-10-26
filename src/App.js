@@ -142,6 +142,7 @@ const App = props => {
         addHandler={addHandler}
         getData={getData}
         getDifficulty={getDifficulty}
+        inputNew={inputNew}
       ></TodoAdd>
       <Filter chosenFilter={filterHandle}></Filter>
       <Content>
