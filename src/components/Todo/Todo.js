@@ -26,8 +26,18 @@ const Todo = ({
         <div className="todo--delete">
           <p>Delete?</p>
           <div>
-            <Button todoId={todoId} handlerFu={removeConfirmFu} type={"YES"} />
-            <Button todoId={todoId} handlerFu={removeConfirmFu} type={"NO"} />
+            <Button
+              btncls={"delete"}
+              todoId={todoId}
+              handlerFu={removeConfirmFu}
+              type={"YES"}
+            />
+            <Button
+              btncls={"delete"}
+              todoId={todoId}
+              handlerFu={removeConfirmFu}
+              type={"NO"}
+            />
           </div>
         </div>
       ) : (

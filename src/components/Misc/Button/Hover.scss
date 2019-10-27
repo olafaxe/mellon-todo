@@ -1,0 +1,24 @@
+.delete {
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #df0000;
+  flex: 1;
+  outline: 2px solid #d40000ec;
+  box-shadow: 3px -3px 3px 0px #6b0000;
+}
+.hover-add {
+  transition: 0.3s;
+  background-color: #3ab637c7;
+  color: #ffffff;
+}
+
+.hover-del {
+  transition: 0.3s;
+  background-color: #f51e0e;
+  color: #ffffff;
+}
+
+.nohover {
+  transition: 0.3s;
+  // background-color: none;
+}

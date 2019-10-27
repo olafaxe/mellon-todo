@@ -5,7 +5,6 @@ import Filter from "./components/Filter/Filter";
 import TodoAdd from "./components/TodoAdd/TodoAdd";
 import Title from "./components/Title/Title";
 import Footer from "./components/Footer/Footer";
-import Button2 from "./components/Misc/Button/Button2";
 
 import "./sass/Style.scss";
 import "./sass/Grid.scss";
@@ -189,7 +188,6 @@ const App = () => {
       />
       <Filter filterHandleFu={filterHandleFu} />
       <Content>
-        <Button2></Button2>
         <TodoFilter
           todo={todo}
           checkHandleFu={checkHandleFu}
