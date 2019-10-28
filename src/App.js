@@ -110,6 +110,7 @@ const App = () => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
         todo.content = inputEditSt ? inputEditSt : inputOldSt;
+        todo.date = Date.now();
         setEditedTodoSt(todo);
       }
 
@@ -127,6 +128,7 @@ const App = () => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
+        todo.date = Date.now();
         setEditedTodoSt(todo);
       }
       return todo;
@@ -147,7 +149,8 @@ const App = () => {
         filter: todoDifficultySt,
         checked: false,
         edit: false,
-        content: inputNewSt
+        content: inputNewSt,
+        date: Date.now()
       });
     }
     e.target.parentElement.parentElement.children[0].children[0].value = "";

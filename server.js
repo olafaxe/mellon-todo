@@ -31,9 +31,12 @@ app.use(bodyParser.json());
 
 app.get("/api/getRequest", (req, res) => {
   const todoCollection = db.collection("todos");
-  todoCollection.find({}).toArray(function(err, todo) {
-    res.send(todo);
-  });
+  todoCollection
+    .find({})
+    .sort({ date: -1 })
+    .toArray(function(err, todo) {
+      res.send(todo);
+    });
 });
 
 app.post("/api/postRequest", (req, res) => {
