@@ -4,7 +4,9 @@ import "./Hover.scss";
 
 const Button = ({ handlerFu, type, todoId, value, btncls }) => {
   const [hover, setHover] = useState(null);
+
   const mouseEnter = e => {
+    e.stopPropagation();
     if (e.target.classList.contains("delete")) {
       setHover("hover-del");
     } else if (e.target.classList.contains("undefined")) {
@@ -12,6 +14,7 @@ const Button = ({ handlerFu, type, todoId, value, btncls }) => {
     }
   };
   const mouseLeave = e => {
+    e.stopPropagation();
     setHover("nohover");
   };
 
@@ -20,6 +23,7 @@ const Button = ({ handlerFu, type, todoId, value, btncls }) => {
       <button
         className={`${hover} ${btncls}`}
         onMouseEnter={mouseEnter}
+        onMouseOver={mouseEnter}
         onMouseLeave={mouseLeave}
         onClick={handlerFu}
       >

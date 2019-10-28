@@ -9,7 +9,7 @@ const Input = ({ label, id, type, getDataFu, def }) => {
           id={id}
           type={type}
           maxLength={40}
-          value={def}
+          defaultValue={def}
         ></input>
       </label>
     </>

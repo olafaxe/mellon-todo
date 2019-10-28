@@ -11,41 +11,43 @@ import "./sass/Grid.scss";
 
 const App = () => {
   const [todo, setTodo] = useState([
-    {
-      id: 1,
-      filter: "HARD",
-      checked: false,
-      edit: false,
-      delete: false,
-      content: "Be a good person"
-    },
-    {
-      id: 2,
-      filter: "HARD",
-      checked: false,
-      edit: false,
-      delete: false,
-      content: "Read something cool"
-    },
-    {
-      id: 3,
-      filter: "EASY",
-      checked: false,
-      edit: false,
-      delete: false,
-      content: "Think about Charlie"
-    },
-    {
-      id: 4,
-      filter: "HARD",
-      checked: false,
-      edit: false,
-      delete: false,
-      content: "Survive in A-team"
-    }
+    // {
+    //   id: 1,
+    //   filter: "HARD",
+    //   checked: false,
+    //   edit: false,
+    //   delete: false,
+    //   content: "Be a good person"
+    // },
+    // {
+    //   id: 2,
+    //   filter: "HARD",
+    //   checked: false,
+    //   edit: false,
+    //   delete: false,
+    //   content: "Read something cool"
+    // },
+    // {
+    //   id: 3,
+    //   filter: "EASY",
+    //   checked: false,
+    //   edit: false,
+    //   delete: false,
+    //   content: "Think about Charlie"
+    // },
+    // {
+    //   id: 4,
+    //   filter: "HARD",
+    //   checked: false,
+    //   edit: false,
+    //   delete: false,
+    //   content: "Survive in A-team"
+    // }
   ]);
 
   const [addTodoSt, setAddTodoSt] = useState();
+  const [removedTodoSt, setRemovedTodoSt] = useState();
+  const [editedTodoSt, setEditedTodoSt] = useState();
   const [inputNewSt, setInputNewSt] = useState();
   const [inputOldSt, setInputOldSt] = useState();
   const [inputEditSt, setInputEditSt] = useState();
@@ -81,6 +83,8 @@ const App = () => {
       return;
     }
     const newTodos = todo.filter(todo => Number(e.target.id) !== todo.id);
+    const removedTodo = todo.filter(todo => Number(e.target.id) === todo.id);
+    setRemovedTodoSt(removedTodo[0]);
     setTodo(newTodos);
   };
 
@@ -106,6 +110,7 @@ const App = () => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
         todo.content = inputEditSt ? inputEditSt : inputOldSt;
+        setEditedTodoSt(todo);
       }
 
       return todo;
@@ -122,6 +127,7 @@ const App = () => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
+        setEditedTodoSt(todo);
       }
       return todo;
     });
@@ -177,6 +183,37 @@ const App = () => {
   //*************** */
   //*** RETURN **** */
 
+  const CrudFu = async (url, method, body) => {
+    let response = await fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" } // *GET, POST, PUT, DELETE, etc.
+    });
+    let data = await response.json();
+    if (method === "GET") {
+      setTodo(prevState => {
+        return [...data];
+      });
+    } else if (method === "POST") {
+      return data;
+    }
+  };
+
+  useEffect(() => {
+    CrudFu("/api/getRequest", "GET");
+    if (addTodoSt) {
+      CrudFu("/api/postRequest", "POST", addTodoSt);
+      setAddTodoSt(null);
+    }
+    if (removedTodoSt) {
+      CrudFu("/api/deleteRequest", "DELETE", removedTodoSt);
+    }
+    if (editedTodoSt) {
+      CrudFu("/api/patchRequest", "PATCH", editedTodoSt);
+    }
+  }, [addTodoSt, removedTodoSt, editedTodoSt]);
+
+  // console.log(todo);
   return (
     <div className="container__grid">
       <Title />
@@ -207,3 +244,21 @@ const App = () => {
 };
 
 export default App;
+
+// fetch("/api/getRequest", {
+//   method: "GET", // *GET, POST, PUT, DELETE, etc.
+//   mode: "no-cors" // no-cors, *cors, same-origin
+// })
+//   .then(res => {
+//     return res.json();
+//   })
+//   .then(data => {
+//     // console.log(data);
+//     // console.log(data);
+//     setTodo(prevState => {
+//       return [...data];
+//     });
+//   })
+//   .catch(function(e) {
+//     console.log(e);
+//   });
