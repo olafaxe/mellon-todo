@@ -128,7 +128,6 @@ const App = () => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
-        todo.date = Date.now();
         setEditedTodoSt(todo);
       }
       return todo;
