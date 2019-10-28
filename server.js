@@ -58,7 +58,8 @@ app.patch("/api/patchRequest", (req, res) => {
       checked: todo.checked,
       edit: todo.edit,
       delete: todo.delete,
-      content: todo.content
+      content: todo.content,
+      date: todo.date
     }
   );
 });

@@ -110,7 +110,7 @@ const App = () => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
         todo.content = inputEditSt ? inputEditSt : inputOldSt;
-        todo.date = todo.date - todo.date + Date.now();
+        todo.date = Date.now();
         setEditedTodoSt(todo);
       }
 
@@ -128,6 +128,7 @@ const App = () => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
+        todo.date = Date.now();
         setEditedTodoSt(todo);
       }
       return todo;
