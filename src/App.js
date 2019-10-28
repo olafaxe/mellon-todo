@@ -143,7 +143,7 @@ const App = () => {
       return;
     } else {
       setAddTodoSt({
-        id: Math.floor(Math.random() * 10000),
+        id: Math.floor(Math.random(36) * 100000000000),
         filter: todoDifficultySt,
         checked: false,
         edit: false,
