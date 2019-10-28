@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 const MongoClient = require("mongodb").MongoClient;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
 
