@@ -2,7 +2,6 @@
   "name": "mellon-todo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://olafaxe.github.io/mellon-todo",
   "dependencies": {
     "express": "^4.17.1",
     "mongodb": "^3.3.3",
