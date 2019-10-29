@@ -45,6 +45,7 @@ const App = () => {
     // }
   ]);
 
+  const [test, setTest] = useState([]);
   const [addTodoSt, setAddTodoSt] = useState();
   const [removedTodoSt, setRemovedTodoSt] = useState();
   const [editedTodoSt, setEditedTodoSt] = useState();
@@ -152,8 +153,14 @@ const App = () => {
         date: Date.now()
       });
     }
+
+    setTest([addTodoSt, ...todo]);
+
+    console.log("test", test);
+    console.log("todo:", todo);
+
     e.target.parentElement.parentElement.children[0].children[0].value = "";
-    setInputNewSt(null);
+    // setInputNewSt("");
   };
 
   //*************** */
@@ -175,12 +182,12 @@ const App = () => {
   //*************** */
   //****USE EFFECTS */
   //*************** */
-  useEffect(() => {
-    if (!addTodoSt) {
-      return;
-    }
-    setTodo([addTodoSt, ...todo]);
-  }, [addTodoSt]);
+  // useEffect(() => {
+  //   if (!addTodoSt) {
+  //     return;
+  //   }
+  //   setTodo([addTodoSt, ...todo]);
+  // }, [addTodoSt]);
 
   //*************** */
   //*** RETURN **** */
@@ -194,30 +201,35 @@ const App = () => {
     let data = await response.json();
     if (method === "GET") {
       setTodo(prevState => {
+        console.log("this is getting data", data);
         return [...data];
       });
     } else if (method === "POST") {
+      console.log("this is adding data", data);
       return data;
     }
+    console.log("this is add body", body);
   };
 
   useEffect(() => {
-    CrudFu("/api/getRequest", "GET");
     if (addTodoSt) {
       CrudFu("/api/postRequest", "POST", addTodoSt);
+      setTodo([addTodoSt, ...todo]);
       setAddTodoSt(null);
-    }
-    if (removedTodoSt) {
+    } else if (removedTodoSt) {
       CrudFu("/api/deleteRequest", "DELETE", removedTodoSt);
       setRemovedTodoSt(null);
-    }
-    if (editedTodoSt) {
+    } else if (editedTodoSt) {
       CrudFu("/api/patchRequest", "PATCH", editedTodoSt);
       setEditedTodoSt(null);
     }
   }, [addTodoSt, removedTodoSt, editedTodoSt]);
 
-  // console.log(todo);
+  useEffect(() => {
+    CrudFu("/api/getRequest", "GET");
+  }, []);
+
+  console.log(addTodoSt);
   return (
     <div className="container__grid">
       <Title />
