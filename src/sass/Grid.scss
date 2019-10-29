@@ -7,7 +7,7 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 2% 1fr 2%;
-  grid-template-rows: 50px 75px 50px 250px (1fr/2);
+  grid-template-rows: 50px 75px 50px 1fr (1fr/8);
   grid-template-areas:
     "title title title"
     ". add ."
@@ -19,7 +19,6 @@ body {
 @media only screen and (min-width: 525px) {
   .container__grid {
     grid-template-columns: 1fr 525px 1fr;
-    grid-template-rows: 50px 75px 50px 1fr (1fr/2);
   }
 }
 .container__title {

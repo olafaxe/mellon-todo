@@ -209,9 +209,11 @@ const App = () => {
     }
     if (removedTodoSt) {
       CrudFu("/api/deleteRequest", "DELETE", removedTodoSt);
+      setRemovedTodoSt(null);
     }
     if (editedTodoSt) {
       CrudFu("/api/patchRequest", "PATCH", editedTodoSt);
+      setEditedTodoSt(null);
     }
   }, [addTodoSt, removedTodoSt, editedTodoSt]);
 
