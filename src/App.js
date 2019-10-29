@@ -60,8 +60,14 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const filterHandleFu = e => {
+    console.log(e);
     let upperFilter = e.target.value.toUpperCase();
     setSelectedFilterSt(upperFilter);
+  };
+
+  const filterTodoList = e => {
+    const filterTodo = todo.filter(todo => todo.filter !== selectedFilterSt);
+    return filterTodo;
   };
 
   //*************** */
@@ -229,7 +235,6 @@ const App = () => {
     CrudFu("/api/getRequest", "GET");
   }, []);
 
-  console.log(addTodoSt);
   return (
     <div className="container__grid">
       <Title />
@@ -242,7 +247,7 @@ const App = () => {
       <Filter filterHandleFu={filterHandleFu} />
       <Content>
         <TodoFilter
-          todo={todo}
+          filterTodoList={selectedFilterSt !== "ALL" ? filterTodoList() : todo}
           checkHandleFu={checkHandleFu}
           editConfirmFu={editConfirmFu}
           editHandleFu={editHandleFu}
@@ -251,7 +256,6 @@ const App = () => {
           removeHandleFu={removeHandleFu}
           editBarrierSt={editBarrierSt}
           inputOldSt={inputOldSt}
-          selectedFilterSt={selectedFilterSt}
         />
       </Content>
       <Footer />
