@@ -17,8 +17,8 @@ let db;
 client.connect(function(err) {
   if (err) throw err;
   //users is the name of the collection from the db document
-  db = client.db("heroku_24b4q4wg");
-  // db = client.db("mellontodo");
+  // db = client.db("heroku_24b4q4wg");
+  db = client.db("mellontodo");
 });
 
 app.use(

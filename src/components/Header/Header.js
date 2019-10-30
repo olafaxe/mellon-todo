@@ -1,14 +1,14 @@
 import React from "react";
 import mellon from "../../images/mellon.png";
 
-import "./Title.scss";
+import "./Header.scss";
 
-const Title = () => {
+const Header = () => {
   return (
     <div className="container__title">
-      <img className="title--image" src={mellon}></img>
+      <img className="title--image" src={mellon} alt="Title"></img>
     </div>
   );
 };
 
-export default Title;
+export default Header;

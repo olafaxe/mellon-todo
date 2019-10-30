@@ -1,58 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Content from "./components/Content/Content";
+import TodoList from "./components/TodoList/TodoList";
 import TodoFilter from "./components/TodoFilter/TodoFilter";
-import Filter from "./components/Filter/Filter";
 import TodoAdd from "./components/TodoAdd/TodoAdd";
-import Title from "./components/Title/Title";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
 import "./sass/Style.scss";
 import "./sass/Grid.scss";
 
 const App = () => {
-  const [todo, setTodo] = useState([
-    // {
-    //   id: 1,
-    //   filter: "HARD",
-    //   checked: false,
-    //   edit: false,
-    //   delete: false,
-    //   content: "Be a good person"
-    // },
-    // {
-    //   id: 2,
-    //   filter: "HARD",
-    //   checked: false,
-    //   edit: false,
-    //   delete: false,
-    //   content: "Read something cool"
-    // },
-    // {
-    //   id: 3,
-    //   filter: "EASY",
-    //   checked: false,
-    //   edit: false,
-    //   delete: false,
-    //   content: "Think about Charlie"
-    // },
-    // {
-    //   id: 4,
-    //   filter: "HARD",
-    //   checked: false,
-    //   edit: false,
-    //   delete: false,
-    //   content: "Survive in A-team"
-    // }
-  ]);
-
-  const [test, setTest] = useState([]);
+  const [todo, setTodo] = useState([]);
   const [addTodoSt, setAddTodoSt] = useState();
   const [removedTodoSt, setRemovedTodoSt] = useState();
   const [editedTodoSt, setEditedTodoSt] = useState();
   const [inputNewSt, setInputNewSt] = useState();
   const [inputOldSt, setInputOldSt] = useState();
   const [inputEditSt, setInputEditSt] = useState();
-  const [editBarrierSt, setEditBarrierSt] = useState(false);
   const [todoDifficultySt, setTodoDifficultySt] = useState("EASY");
   const [selectedFilterSt, setSelectedFilterSt] = useState("ALL");
 
@@ -60,14 +24,15 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const filterHandleFu = e => {
-    console.log(e);
     let upperFilter = e.target.value.toUpperCase();
     setSelectedFilterSt(upperFilter);
   };
 
-  const filterTodoList = e => {
-    const filterTodo = todo.filter(todo => todo.filter !== selectedFilterSt);
-    return filterTodo;
+  const filterTodoList = (todos, filter) => {
+    if (filter === "ALL") {
+      return todos;
+    }
+    return todos.filter(todo => todo.filter === filter);
   };
 
   //*************** */
@@ -102,9 +67,8 @@ const App = () => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
-        setInputEditSt(inputOldSt ? inputOldSt : todo.content);
-        setInputOldSt(!inputOldSt ? todo.content : null);
-        setEditBarrierSt(!editBarrierSt);
+        setInputEditSt(todo.content);
+        // setInputOldSt(!inputOldSt ? todo.content : "");
         return todo;
       }
       return todo;
@@ -124,8 +88,6 @@ const App = () => {
       return todo;
     });
     setTodo(editTodo);
-    setInputOldSt(null);
-    setEditBarrierSt(!editBarrierSt);
   };
 
   //*************** */
@@ -158,15 +120,11 @@ const App = () => {
         content: inputNewSt,
         date: Date.now()
       });
+      setInputNewSt("");
     }
 
-    setTest([addTodoSt, ...todo]);
-
-    console.log("test", test);
-    console.log("todo:", todo);
-
-    e.target.parentElement.parentElement.children[0].children[0].value = "";
-    // setInputNewSt("");
+    // e.target.parentElement.parentElement.children[0].children[0].value = "";
+    console.log(e.target.parentNode.parentNode);
   };
 
   //*************** */
@@ -175,7 +133,6 @@ const App = () => {
   const getDataFu = e => {
     if (e.target.id === "todo--edit") {
       setInputEditSt(inputOldSt ? inputOldSt + e.target.value : e.target.value);
-      setInputOldSt(null);
     } else {
       setInputNewSt(e.target.value);
     }
@@ -183,6 +140,22 @@ const App = () => {
 
   const getDifficultyFu = e => {
     setTodoDifficultySt(e.target.value.toUpperCase());
+  };
+
+  const CrudFu = async (url, method, body) => {
+    let response = await fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" } // *GET, POST, PUT, DELETE, etc.
+    });
+    let data = await response.json();
+    if (method === "GET") {
+      setTodo(prevState => {
+        return [...data];
+      });
+    } else if (method === "POST") {
+      return data;
+    }
   };
 
   //*************** */
@@ -198,25 +171,6 @@ const App = () => {
   //*************** */
   //*** RETURN **** */
 
-  const CrudFu = async (url, method, body) => {
-    let response = await fetch(url, {
-      method: method,
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" } // *GET, POST, PUT, DELETE, etc.
-    });
-    let data = await response.json();
-    if (method === "GET") {
-      setTodo(prevState => {
-        console.log("this is getting data", data);
-        return [...data];
-      });
-    } else if (method === "POST") {
-      console.log("this is adding data", data);
-      return data;
-    }
-    console.log("this is add body", body);
-  };
-
   useEffect(() => {
     if (addTodoSt) {
       CrudFu("/api/postRequest", "POST", addTodoSt);
@@ -229,33 +183,31 @@ const App = () => {
       CrudFu("/api/patchRequest", "PATCH", editedTodoSt);
       setEditedTodoSt(null);
     }
-  }, [addTodoSt, removedTodoSt, editedTodoSt]);
+  }, [todo, addTodoSt, removedTodoSt, editedTodoSt]);
 
   useEffect(() => {
     CrudFu("/api/getRequest", "GET");
   }, []);
-
   return (
     <div className="container__grid">
-      <Title />
+      <Header />
       <TodoAdd
         addHandleFu={addHandleFu}
         getDataFu={getDataFu}
         getDifficultyFu={getDifficultyFu}
         inputNewSt={inputNewSt}
       />
-      <Filter filterHandleFu={filterHandleFu} />
+      <TodoFilter filterHandleFu={filterHandleFu} />
       <Content>
-        <TodoFilter
-          filterTodoList={selectedFilterSt !== "ALL" ? filterTodoList() : todo}
+        <TodoList
+          filterTodoList={filterTodoList(todo, selectedFilterSt)}
           checkHandleFu={checkHandleFu}
           editConfirmFu={editConfirmFu}
           editHandleFu={editHandleFu}
           getDataFu={getDataFu}
           removeConfirmFu={removeConfirmFu}
           removeHandleFu={removeHandleFu}
-          editBarrierSt={editBarrierSt}
-          inputOldSt={inputOldSt}
+          inputEditSt={inputEditSt}
         />
       </Content>
       <Footer />
@@ -264,21 +216,3 @@ const App = () => {
 };
 
 export default App;
-
-// fetch("/api/getRequest", {
-//   method: "GET", // *GET, POST, PUT, DELETE, etc.
-//   mode: "no-cors" // no-cors, *cors, same-origin
-// })
-//   .then(res => {
-//     return res.json();
-//   })
-//   .then(data => {
-//     // console.log(data);
-//     // console.log(data);
-//     setTodo(prevState => {
-//       return [...data];
-//     });
-//   })
-//   .catch(function(e) {
-//     console.log(e);
-//   });

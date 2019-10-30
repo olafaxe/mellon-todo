@@ -1,15 +1,15 @@
 import React from "react";
 
-const Input = ({ label, id, type, getDataFu, def }) => {
+const Input = ({ label, id, getDataFu, def }) => {
   return (
     <>
       <label htmlFor={label}>
         <input
           onChange={getDataFu}
           id={id}
-          type={type}
+          type={"text"}
           maxLength={40}
-          defaultValue={def}
+          value={def}
         ></input>
       </label>
     </>

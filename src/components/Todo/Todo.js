@@ -2,7 +2,9 @@ import React from "react";
 import Input from "../Misc/Input/Input";
 import "./Todo.scss";
 
-import Button from "../Misc/Button/Button";
+import TodoDelete from "../../TodoDelete/TodoDelete";
+import TodoEdit from "../../components/TodoEdit/TodoEdit";
+import TodoContent from "../../components/TodoContent/TodoContent";
 
 const Todo = ({
   todoId,
@@ -16,65 +18,40 @@ const Todo = ({
   removeConfirmFu,
   editHandleFu,
   editConfirmFu,
-  editBarrierSt,
-  inputOldSt
+  inputOldSt,
+  inputEditSt
 }) => {
-  // console.log(todoDelete);
   return (
     <div className="container__todo" key={todoId.toString()} id={todoId}>
       {todoDelete ? (
-        <div className="todo--delete">
-          <p>Delete?</p>
-          <div>
-            <Button
-              btncls={"delete"}
-              todoId={todoId}
-              handlerFu={removeConfirmFu}
-              type={"YES"}
-            />
-            <Button
-              btncls={"delete"}
-              todoId={todoId}
-              handlerFu={removeConfirmFu}
-              type={"NO"}
-            />
-          </div>
-        </div>
+        <TodoDelete todoId={todoId} removeConfirmFu={removeConfirmFu} />
       ) : (
         <>
-          {" "}
           <div className="todo--content">
             {todoEdit ? (
-              <Input
-                label={"todo--edit"}
-                id={"todo--edit"}
-                getDataFu={getDataFu}
-                def={inputOldSt}
-              />
-            ) : !todoChecked ? (
-              <p onClick={checkHandleFu} id={todoId}>
-                {todoContent}
-              </p>
+              <form>
+                <Input
+                  label={"todo--edit"}
+                  id={"todo--edit"}
+                  getDataFu={getDataFu}
+                  def={inputEditSt}
+                />
+              </form>
             ) : (
-              <s onClick={checkHandleFu} id={todoId}>
-                {todoContent}
-              </s>
+              <TodoContent
+                todoChecked={todoChecked}
+                todoId={todoId}
+                checkHandleFu={checkHandleFu}
+                todoContent={todoContent}
+              />
             )}
           </div>
           <div className="todo--icons">
-            {todoEdit ? (
-              <i
-                onClick={editConfirmFu}
-                id={todoId}
-                className="far fa-check-circle"
-              ></i>
-            ) : (
-              <i
-                onClick={!editBarrierSt ? editHandleFu : null}
-                id={todoId}
-                className="fas fa-edit"
-              ></i>
-            )}
+            <TodoEdit
+              todoid={todoId}
+              editFunction={!todoEdit ? editHandleFu : editConfirmFu}
+              stylingClass={!todoEdit ? "fas fa-edit" : "far fa-check-circle"}
+            />
             <i
               onClick={removeHandleFu}
               id={todoId}
