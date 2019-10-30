@@ -4,12 +4,19 @@ import "./TodoFilter.scss";
 const TodoFilter = ({ filterHandleFu }) => {
   return (
     <div className="container__filter">
-      <div className="filter__container">
-        <select onChange={filterHandleFu}>
-          <option>All</option>
-          <option>Easy</option>
-          <option>Hard</option>
-        </select>
+      <div onClick={filterHandleFu} className="filter__container">
+        <div className="filter--content">
+          <p>All</p>
+        </div>
+        <div className="filter--content">
+          <p>Easy</p>
+        </div>
+        <div className="filter--content">
+          <p>Hard</p>
+        </div>
+        <div className="filter--content">
+          <p>Completed</p>
+        </div>
       </div>
     </div>
   );

@@ -8,18 +8,20 @@ const TodoAdd = ({ addHandleFu, getDataFu, getDifficultyFu, inputNewSt }) => {
   return (
     <div className="container__add">
       <div className="add--todo__container">
-        <Input
-          label={"taskname"}
-          id={"taskname"}
-          getDataFu={getDataFu}
-          def={inputNewSt}
-        />
-        <Selector
-          label={"taskdiff"}
-          id={"taskdiff"}
-          getDifficultyFu={getDifficultyFu}
-        />
-        <Button handlerFu={addHandleFu} type={"Seed"} />
+        <form>
+          <Input
+            label={"taskname"}
+            id={"taskname"}
+            getDataFu={getDataFu}
+            def={inputNewSt}
+          />
+          <Selector
+            label={"taskdiff"}
+            id={"taskdiff"}
+            getDifficultyFu={getDifficultyFu}
+          />
+          <Button handlerFu={addHandleFu} type={"Seed"} />
+        </form>
       </div>
     </div>
   );

@@ -14,9 +14,8 @@ const App = () => {
   const [addTodoSt, setAddTodoSt] = useState();
   const [removedTodoSt, setRemovedTodoSt] = useState();
   const [editedTodoSt, setEditedTodoSt] = useState();
-  const [inputNewSt, setInputNewSt] = useState();
-  const [inputOldSt, setInputOldSt] = useState();
-  const [inputEditSt, setInputEditSt] = useState();
+  const [inputNewSt, setInputNewSt] = useState("");
+  const [inputEditSt, setInputEditSt] = useState("");
   const [todoDifficultySt, setTodoDifficultySt] = useState("EASY");
   const [selectedFilterSt, setSelectedFilterSt] = useState("ALL");
 
@@ -24,13 +23,13 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const filterHandleFu = e => {
-    let upperFilter = e.target.value.toUpperCase();
+    let upperFilter = e.target.textContent.toUpperCase();
     setSelectedFilterSt(upperFilter);
   };
 
   const filterTodoList = (todos, filter) => {
     if (filter === "ALL") {
-      return todos;
+      return todos.filter(todo => todo.filter !== "COMPLETED");
     }
     return todos.filter(todo => todo.filter === filter);
   };
@@ -68,7 +67,6 @@ const App = () => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
         setInputEditSt(todo.content);
-        // setInputOldSt(!inputOldSt ? todo.content : "");
         return todo;
       }
       return todo;
@@ -80,7 +78,7 @@ const App = () => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
-        todo.content = inputEditSt ? inputEditSt : inputOldSt;
+        todo.content = inputEditSt;
         todo.date = Date.now();
         setEditedTodoSt(todo);
       }
@@ -97,6 +95,7 @@ const App = () => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
+        todo.filter = todo.filter !== "COMPLETED" ? "COMPLETED" : "ALL";
         setEditedTodoSt(todo);
       }
       return todo;
@@ -122,9 +121,6 @@ const App = () => {
       });
       setInputNewSt("");
     }
-
-    // e.target.parentElement.parentElement.children[0].children[0].value = "";
-    console.log(e.target.parentNode.parentNode);
   };
 
   //*************** */
@@ -132,7 +128,7 @@ const App = () => {
   //*************** */
   const getDataFu = e => {
     if (e.target.id === "todo--edit") {
-      setInputEditSt(inputOldSt ? inputOldSt + e.target.value : e.target.value);
+      setInputEditSt(e.target.value);
     } else {
       setInputNewSt(e.target.value);
     }
@@ -161,15 +157,6 @@ const App = () => {
   //*************** */
   //****USE EFFECTS */
   //*************** */
-  // useEffect(() => {
-  //   if (!addTodoSt) {
-  //     return;
-  //   }
-  //   setTodo([addTodoSt, ...todo]);
-  // }, [addTodoSt]);
-
-  //*************** */
-  //*** RETURN **** */
 
   useEffect(() => {
     if (addTodoSt) {

@@ -15,8 +15,33 @@
   min-width: 100%;
   max-width: 365px;
   height: 50px;
-  background-color: #4b4e4c;
-  box-shadow: 2px -2px 0px 0px #01661d;
+  // box-shadow: 2px -2px 0px 0px #01661d;
+  background-color: 2px solid #c4d8cb;
   margin-bottom: 5px;
-  border-radius: 3px;
+}
+
+.filter--content {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #195c30;
+  margin-left: 5px;
+  margin-right: 5px;
+  appearance: none;
+  cursor: default;
+  color: #f8f8f8;
+  display: flex;
+  text-align: center;
+  p {
+    padding: 10%;
+    flex: 1;
+  }
+}
+
+.filter--content:hover {
+  background-color: #288d4c;
+  color: #ffffff;
 }

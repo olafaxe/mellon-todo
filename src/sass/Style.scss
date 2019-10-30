@@ -40,3 +40,11 @@ option {
   font-family: $ubuntu;
   font-weight: $light;
 }
+
+.filter--content {
+  p {
+    font-family: $press-start;
+    font-size: 10px;
+    font-weight: $light;
+  }
+}
