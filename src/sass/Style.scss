@@ -52,15 +52,7 @@ option {
 .filter--content {
   p {
     font-family: $press-start;
-    font-size: 2vw;
+    font-size: 10px;
     font-weight: $light;
-  }
-}
-
-@media only screen and(min-width: 670px) {
-  .filter--content {
-    p {
-      font-size: 10px;
-    }
   }
 }
