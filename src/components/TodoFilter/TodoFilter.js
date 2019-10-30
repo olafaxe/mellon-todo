@@ -15,7 +15,7 @@ const TodoFilter = ({ filterHandleFu }) => {
           <p>Hard</p>
         </div>
         <div className="filter--content">
-          <p>Completed</p>
+          <p>Complete</p>
         </div>
       </div>
     </div>
