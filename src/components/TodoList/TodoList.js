@@ -8,7 +8,6 @@ const TodoList = ({
   getDataFu,
   removeConfirmFu,
   removeHandleFu,
-  inputOldSt,
   inputEditSt
 }) => {
   return (
@@ -28,7 +27,6 @@ const TodoList = ({
             getDataFu={getDataFu}
             removeHandleFu={removeHandleFu}
             removeConfirmFu={removeConfirmFu}
-            inputOldSt={inputOldSt}
             inputEditSt={inputEditSt}
           />
         );

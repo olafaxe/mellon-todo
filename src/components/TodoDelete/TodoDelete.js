@@ -1,19 +1,20 @@
 import React from "react";
-import Button from "../components/Misc/Button/Button";
+import Button from "../Misc/Button/Button";
 
+import "./TodoDelete.scss";
 const TodoDelete = ({ todoId, removeConfirmFu }) => {
   return (
     <div className="todo--delete">
       <p>Delete?</p>
-      <div>
+      <div className="todo--delete--btns">
         <Button
-          btncls={"delete"}
+          btncls={"todo--delete--btn todo--delete--yes"}
           todoId={todoId}
           handlerFu={removeConfirmFu}
           type={"YES"}
         />
         <Button
-          btncls={"delete"}
+          btncls={"todo--delete--btn todo--delete--no"}
           todoId={todoId}
           handlerFu={removeConfirmFu}
           type={"NO"}

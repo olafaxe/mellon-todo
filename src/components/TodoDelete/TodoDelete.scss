@@ -1,0 +1,46 @@
+.todo--delete {
+  position: absolute;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-between;
+  background-color: #00000063;
+  transition: 1s;
+}
+
+.todo--delete--btns {
+  display: flex;
+  margin: 5px;
+  margin-top: 7px;
+  justify-content: space-between;
+}
+.todo--delete--btn {
+  border: none;
+}
+.todo--delete--yes {
+  flex: 1;
+  background-color: #d40000f5;
+  box-shadow: 3px -3px 3px 0px #6b0000;
+  margin-right: 5px;
+}
+
+.todo--delete--yes:hover {
+  transition: 0.3s;
+  background-color: #ff0101ec;
+  color: #ffffff;
+}
+.todo--delete--no {
+  flex: 1;
+  background-color: #39b637f5;
+  box-shadow: 3px -3px 3px 0px #091d09c7;
+  margin-left: 5px;
+}
+.todo--delete--no:hover {
+  transition: 0.3s;
+  background-color: #49e946;
+  color: #ffffff;
+}

@@ -20,7 +20,11 @@ const TodoAdd = ({ addHandleFu, getDataFu, getDifficultyFu, inputNewSt }) => {
             id={"taskdiff"}
             getDifficultyFu={getDifficultyFu}
           />
-          <Button handlerFu={addHandleFu} type={"Seed"} />
+          <Button
+            handlerFu={addHandleFu}
+            type={"Seed"}
+            btncls={"todo--add--btn"}
+          />
         </form>
       </div>
     </div>

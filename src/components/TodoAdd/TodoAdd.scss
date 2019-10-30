@@ -47,7 +47,7 @@
   }
 }
 
-button {
+.todo--add--btn {
   width: 25%;
   border: none;
   background-color: #30972e;
@@ -57,4 +57,10 @@ button {
   p {
     font-family: "Press Start 2P", cursive;
   }
+}
+
+.todo--add--btn:hover {
+  background-color: #46da43;
+  color: #ffffff;
+  transition: 0.5s;
 }
