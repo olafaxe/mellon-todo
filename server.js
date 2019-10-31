@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
+
 const port = process.env.PORT || 5000;
 const MongoClient = require("mongodb").MongoClient;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
@@ -15,6 +16,7 @@ let db;
 
 client.connect(function(err) {
   if (err) throw err;
+  //users is the name of the collection from the db document
   db = client.db("heroku_24b4q4wg");
   // db = client.db("mellontodo");
 });
@@ -60,7 +62,7 @@ app.patch("/todos", (req, res) => {
         date: todo.date
       }
     )
-    .then(() => res.send(todo));
+    .then(() => res.send(todo.id));
 });
 
 app.delete("/todos/:id", (req, res) => {
