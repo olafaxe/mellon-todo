@@ -29,7 +29,7 @@ app.use(
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json());
 
-app.get("/api/getRequest", (req, res) => {
+app.get("/todos", (req, res) => {
   const todoCollection = db.collection("todos");
   todoCollection
     .find({})
@@ -39,14 +39,14 @@ app.get("/api/getRequest", (req, res) => {
     });
 });
 
-app.post("/api/postRequest", (req, res) => {
+app.post("/todos", (req, res) => {
   const todo = req.body;
   const todoCollection = db.collection("todos");
 
   todoCollection.insertMany([todo]);
 });
 
-app.patch("/api/patchRequest", (req, res) => {
+app.patch("/todos", (req, res) => {
   //patch
   const todo = req.body;
   const todoCollection = db.collection("todos");
@@ -64,11 +64,9 @@ app.patch("/api/patchRequest", (req, res) => {
   );
 });
 
-app.delete("/api/deleteRequest", (req, res) => {
-  //get
-  const todo = req.body;
+app.delete("/todos/:id", (req, res) => {
   const todoCollection = db.collection("todos");
-  todoCollection.deleteMany({ id: todo.id });
+  todoCollection.deleteMany({ id: Number(req.params.id) });
 });
 
 app.get("*", (req, res) => {

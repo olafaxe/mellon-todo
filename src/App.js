@@ -23,8 +23,8 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const getFilter = e => {
-    let upperFilter = e.target.textContent.toUpperCase();
-    setSelectedFilterSt(upperFilter);
+    // let upperFilter = e.target.textContent.toUpperCase();
+    setSelectedFilterSt(e.target.textContent.toUpperCase());
   };
 
   const filteringTodoList = (todos, filter) => {
@@ -55,7 +55,8 @@ const App = () => {
     }
     const newTodos = todo.filter(todo => Number(e.target.id) !== todo.id);
     const removedTodo = todo.filter(todo => Number(e.target.id) === todo.id);
-    setRemovedTodoSt(removedTodo[0]);
+    // setRemovedTodoSt(removedTodo[0]);
+    setRemovedTodoSt(removedTodo[0].id);
     setTodo(newTodos);
   };
 
@@ -160,21 +161,22 @@ const App = () => {
 
   useEffect(() => {
     if (addTodoSt) {
-      CRUDoperation("/api/postRequest", "POST", addTodoSt);
+      CRUDoperation("/todos", "POST", addTodoSt);
       setTodo([addTodoSt, ...todo]);
       setAddTodoSt(null);
     } else if (removedTodoSt) {
-      CRUDoperation("/api/deleteRequest", "DELETE", removedTodoSt);
+      CRUDoperation(`/todos/${removedTodoSt}`, "DELETE");
       setRemovedTodoSt(null);
     } else if (editedTodoSt) {
-      CRUDoperation("/api/patchRequest", "PATCH", editedTodoSt);
+      CRUDoperation("/todos", "PATCH", editedTodoSt);
       setEditedTodoSt(null);
     }
   }, [todo, addTodoSt, removedTodoSt, editedTodoSt]);
 
   useEffect(() => {
-    CRUDoperation("/api/getRequest", "GET");
+    CRUDoperation("/todos", "GET");
   }, []);
+
   return (
     <div className="container__grid">
       <Header />
