@@ -6,7 +6,7 @@ import TodoDelete from "../TodoDelete/TodoDelete";
 import TodoEdit from "../TodoEdit/TodoEdit";
 import TodoContent from "../TodoContent/TodoContent";
 
-const Todo = ({
+const TodoItem = ({
   todoId,
   todoContent,
   todoChecked,
@@ -58,4 +58,4 @@ const Todo = ({
   );
 };
 
-export default Todo;
+export default TodoItem;
