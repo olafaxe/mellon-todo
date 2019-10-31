@@ -11,9 +11,10 @@ import "./sass/Grid.scss";
 
 const App = () => {
   const [todo, setTodo] = useState([]);
-  const [addTodoSt, setAddTodoSt] = useState();
-  const [removedTodoSt, setRemovedTodoSt] = useState();
-  const [editedTodoSt, setEditedTodoSt] = useState();
+  const [isTodoAdded, setIsTodoAdded] = useState(null);
+  const [removedTodoSt, setRemovedTodoSt] = useState(null);
+  const [editedTodoSt, setEditedTodoSt] = useState(null);
+  const [isTodoChecked, setIsTodoChecked] = useState(null);
   const [inputNewSt, setInputNewSt] = useState("");
   const [inputEditSt, setInputEditSt] = useState("");
   const [todoDifficultySt, setTodoDifficultySt] = useState("EASY");
@@ -23,7 +24,6 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const getFilter = e => {
-    // let upperFilter = e.target.textContent.toUpperCase();
     setSelectedFilterSt(e.target.textContent.toUpperCase());
   };
 
@@ -73,33 +73,29 @@ const App = () => {
   };
 
   const confirmingEdit = e => {
-    console.log(e);
-    const editTodo = todo.map(todo => {
+    return todo.map(todo => {
       if (Number(e) === todo.id) {
         todo.edit = !todo.edit;
         todo.content = inputEditSt;
         todo.date = Date.now();
         setEditedTodoSt(todo);
       }
-
       return todo;
     });
-    setTodo(editTodo);
   };
 
   //*************** */
   //*********CHECK */
   //*************** */
   const switchingCompleteStatus = e => {
-    const checkedTodo = todo.map(todo => {
+    return todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
         todo.filter = todo.filter !== "COMPLETED" ? "COMPLETED" : "ALL";
-        setEditedTodoSt(todo);
+        setIsTodoChecked(todo);
       }
       return todo;
     });
-    setTodo(checkedTodo);
   };
 
   //*************** */
@@ -110,7 +106,7 @@ const App = () => {
     if (!inputNewSt) {
       return;
     } else {
-      setAddTodoSt({
+      setIsTodoAdded({
         id: Math.floor(Math.random(36) * 100000000000),
         filter: todoDifficultySt,
         checked: false,
@@ -137,6 +133,10 @@ const App = () => {
     setTodoDifficultySt(e.target.value.toUpperCase());
   };
 
+  //*************** */
+  //---- HTTP  ---- */
+  //*************** */
+
   const CRUDoperation = async (url, method, body) => {
     try {
       let response = await fetch(url, {
@@ -147,20 +147,16 @@ const App = () => {
       let data = await response.json();
       return data;
     } catch (e) {
-      console.log("hej:", e);
+      return e;
     }
   };
 
-  //*************** */
-  //****USE EFFECTS */
-  //*************** */
-
   useEffect(() => {
-    if (addTodoSt) {
-      CRUDoperation("/todos", "POST", addTodoSt).then(data =>
-        setTodo([data, ...todo])
+    if (isTodoAdded) {
+      CRUDoperation("/todos", "POST", isTodoAdded).then(data =>
+        data ? setTodo([data, ...todo]) : null
       );
-      setAddTodoSt(null);
+      setIsTodoAdded(null);
     } else if (removedTodoSt) {
       CRUDoperation(`/todos/${removedTodoSt}`, "DELETE").then(data => {
         if (data) {
@@ -172,8 +168,11 @@ const App = () => {
     } else if (editedTodoSt) {
       CRUDoperation("/todos", "PATCH", editedTodoSt);
       setEditedTodoSt(null);
+    } else if (isTodoChecked) {
+      CRUDoperation("/todos", "PATCH", isTodoChecked);
+      setIsTodoChecked(null);
     }
-  }, [todo, addTodoSt, removedTodoSt, editedTodoSt]);
+  }, [todo, isTodoAdded, removedTodoSt, editedTodoSt, isTodoChecked]);
 
   useEffect(() => {
     CRUDoperation("/todos", "GET").then(data => setTodo([...data]));

@@ -62,7 +62,7 @@ app.patch("/todos", (req, res) => {
         date: todo.date
       }
     )
-    .then(() => res.send(todo.id));
+    .then(() => res.send(todo));
 });
 
 app.delete("/todos/:id", (req, res) => {
