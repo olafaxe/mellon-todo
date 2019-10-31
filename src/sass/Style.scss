@@ -17,6 +17,15 @@ $normal: 400;
 $semibold: 500;
 $bold: 700;
 
+.container__todo {
+  p,
+  s {
+    margin: 0px;
+    padding: 0px;
+    font-family: $ubuntu;
+    font-size: 20px;
+  }
+}
 p,
 s {
   margin: 0px;
@@ -24,10 +33,18 @@ s {
   font-family: $ubuntu;
   font-size: 20px;
 }
+.todo--add--btn {
+  font-family: $press-start;
+}
 @media only screen and(max-width: 400px) {
-  p,
-  s {
-    font-size: 15px;
+  .container__todo,
+  .todo--add--btn {
+    p,
+    s {
+      margin: 0px;
+      padding: 0px;
+      font-size: 15px;
+    }
   }
 }
 

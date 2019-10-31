@@ -35,8 +35,9 @@
   display: flex;
   text-align: center;
   p {
+    flex: 1;
     color: #f8f8f8;
-    padding: 10%;
+    padding: 10px;
 
     // flex: 1;
   }
