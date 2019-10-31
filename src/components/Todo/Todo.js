@@ -12,18 +12,18 @@ const Todo = ({
   todoChecked,
   todoDelete,
   todoEdit,
-  checkHandleFu,
-  getDataFu,
-  removeHandleFu,
-  removeConfirmFu,
-  editHandleFu,
-  editConfirmFu,
+  switchingCompleteStatus,
+  getDataFromInput,
+  switchingRemoveMode,
+  confirmingRemove,
+  switchingEditingMode,
+  confirmingEdit,
   inputEditSt
 }) => {
   return (
     <div className="container__todo" key={todoId.toString()} id={todoId}>
       {todoDelete ? (
-        <TodoDelete todoId={todoId} removeConfirmFu={removeConfirmFu} />
+        <TodoDelete todoId={todoId} confirmingRemove={confirmingRemove} />
       ) : null}
       <div className="todo--content">
         {todoEdit ? (
@@ -31,7 +31,7 @@ const Todo = ({
             <Input
               label={"todo--edit"}
               id={"todo--edit"}
-              getDataFu={getDataFu}
+              getDataFromInput={getDataFromInput}
               def={inputEditSt}
             />
           </form>
@@ -39,7 +39,7 @@ const Todo = ({
           <TodoContent
             todoChecked={todoChecked}
             todoId={todoId}
-            checkHandleFu={checkHandleFu}
+            switchingCompleteStatus={switchingCompleteStatus}
             todoContent={todoContent}
           />
         )}
@@ -47,10 +47,14 @@ const Todo = ({
       <div className="todo--icons">
         <TodoEdit
           todoid={todoId}
-          editFunction={!todoEdit ? editHandleFu : editConfirmFu}
+          editFunction={!todoEdit ? switchingEditingMode : confirmingEdit}
           stylingClass={!todoEdit ? "fas fa-edit" : "far fa-check-circle"}
         />
-        <i onClick={removeHandleFu} id={todoId} className="fas fa-trash"></i>
+        <i
+          onClick={switchingRemoveMode}
+          id={todoId}
+          className="fas fa-trash"
+        ></i>
       </div>
     </div>
   );

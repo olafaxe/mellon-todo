@@ -1,14 +1,19 @@
 import React from "react";
 
-const TodoContent = ({ todoChecked, todoId, checkHandleFu, todoContent }) => {
+const TodoContent = ({
+  todoChecked,
+  todoId,
+  switchingCompleteStatus,
+  todoContent
+}) => {
   return (
     <>
       {!todoChecked ? (
-        <p onClick={checkHandleFu} id={todoId}>
+        <p onClick={switchingCompleteStatus} id={todoId}>
           {todoContent}
         </p>
       ) : (
-        <s onClick={checkHandleFu} id={todoId}>
+        <s onClick={switchingCompleteStatus} id={todoId}>
           {todoContent}
         </s>
       )}

@@ -1,10 +1,10 @@
 import React from "react";
 import "./TodoFilter.scss";
 
-const TodoFilter = ({ filterHandleFu }) => {
+const TodoFilter = ({ getFilter }) => {
   return (
     <div className="container__filter">
-      <div onClick={filterHandleFu} className="filter__container">
+      <div onClick={getFilter} className="filter__container">
         <div className="filter--content">
           <p>All</p>
         </div>

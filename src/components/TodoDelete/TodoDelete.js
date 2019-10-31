@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../Misc/Button/Button";
 
 import "./TodoDelete.scss";
-const TodoDelete = ({ todoId, removeConfirmFu }) => {
+const TodoDelete = ({ todoId, confirmingRemove }) => {
   return (
     <div className="todo--delete">
       <p>Delete?</p>
@@ -10,13 +10,13 @@ const TodoDelete = ({ todoId, removeConfirmFu }) => {
         <Button
           btncls={"todo--delete--btn todo--delete--yes"}
           todoId={todoId}
-          handlerFu={removeConfirmFu}
+          buttonAction={confirmingRemove}
           type={"YES"}
         />
         <Button
           btncls={"todo--delete--btn todo--delete--no"}
           todoId={todoId}
-          handlerFu={removeConfirmFu}
+          buttonAction={confirmingRemove}
           type={"NO"}
         />
       </div>

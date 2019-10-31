@@ -4,7 +4,12 @@ import Input from "../Misc/Input/Input";
 import Selector from "../Misc/Selector/Selector";
 import "./TodoAdd.scss";
 
-const TodoAdd = ({ addHandleFu, getDataFu, getDifficultyFu, inputNewSt }) => {
+const TodoAdd = ({
+  addTodoItem,
+  getDataFromInput,
+  choosingDifficulty,
+  inputNewSt
+}) => {
   return (
     <div className="container__add">
       <div className="add--todo__container">
@@ -12,16 +17,16 @@ const TodoAdd = ({ addHandleFu, getDataFu, getDifficultyFu, inputNewSt }) => {
           <Input
             label={"taskname"}
             id={"taskname"}
-            getDataFu={getDataFu}
+            getDataFromInput={getDataFromInput}
             def={inputNewSt}
           />
           <Selector
             label={"taskdiff"}
             id={"taskdiff"}
-            getDifficultyFu={getDifficultyFu}
+            choosingDifficulty={choosingDifficulty}
           />
           <Button
-            handlerFu={addHandleFu}
+            buttonAction={addTodoItem}
             type={"Seed"}
             btncls={"todo--add--btn"}
           />

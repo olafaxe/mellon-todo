@@ -22,12 +22,12 @@ const App = () => {
   //*************** */
   //*********FILTER */
   //*************** */
-  const filterHandleFu = e => {
+  const getFilter = e => {
     let upperFilter = e.target.textContent.toUpperCase();
     setSelectedFilterSt(upperFilter);
   };
 
-  const filterTodoList = (todos, filter) => {
+  const filteringTodoList = (todos, filter) => {
     if (filter === "ALL") {
       return todos.filter(todo => todo.filter !== "COMPLETED");
     }
@@ -37,7 +37,7 @@ const App = () => {
   //*************** */
   //*********DELETE */
   //*************** */
-  const removeHandleFu = e => {
+  const switchingRemoveMode = e => {
     const deleteTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.delete = !todo.delete;
@@ -48,9 +48,9 @@ const App = () => {
     setTodo(deleteTodo);
   };
 
-  const removeConfirmFu = e => {
+  const confirmingRemove = e => {
     if (e.target.innerText === "NO") {
-      removeHandleFu(e);
+      switchingRemoveMode(e);
       return;
     }
     const newTodos = todo.filter(todo => Number(e.target.id) !== todo.id);
@@ -62,7 +62,7 @@ const App = () => {
   //*************** */
   //*********EDIT ***/
   //*************** */
-  const editHandleFu = e => {
+  const switchingEditingMode = e => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
@@ -74,7 +74,7 @@ const App = () => {
     setTodo(editTodo);
   };
 
-  const editConfirmFu = e => {
+  const confirmingEdit = e => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
@@ -91,7 +91,7 @@ const App = () => {
   //*************** */
   //*********CHECK */
   //*************** */
-  const checkHandleFu = e => {
+  const switchingCompleteStatus = e => {
     const checkedTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
@@ -106,7 +106,7 @@ const App = () => {
   //*************** */
   //*********ADDING */
   //*************** */
-  const addHandleFu = e => {
+  const addTodoItem = e => {
     e.preventDefault();
     if (!inputNewSt) {
       return;
@@ -126,7 +126,7 @@ const App = () => {
   //*************** */
   //*********DATA ***/
   //*************** */
-  const getDataFu = e => {
+  const getDataFromInput = e => {
     if (e.target.id === "todo--edit") {
       setInputEditSt(e.target.value);
     } else {
@@ -134,11 +134,11 @@ const App = () => {
     }
   };
 
-  const getDifficultyFu = e => {
+  const choosingDifficulty = e => {
     setTodoDifficultySt(e.target.value.toUpperCase());
   };
 
-  const CrudFu = async (url, method, body) => {
+  const CRUDoperation = async (url, method, body) => {
     let response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
@@ -160,40 +160,40 @@ const App = () => {
 
   useEffect(() => {
     if (addTodoSt) {
-      CrudFu("/api/postRequest", "POST", addTodoSt);
+      CRUDoperation("/api/postRequest", "POST", addTodoSt);
       setTodo([addTodoSt, ...todo]);
       setAddTodoSt(null);
     } else if (removedTodoSt) {
-      CrudFu("/api/deleteRequest", "DELETE", removedTodoSt);
+      CRUDoperation("/api/deleteRequest", "DELETE", removedTodoSt);
       setRemovedTodoSt(null);
     } else if (editedTodoSt) {
-      CrudFu("/api/patchRequest", "PATCH", editedTodoSt);
+      CRUDoperation("/api/patchRequest", "PATCH", editedTodoSt);
       setEditedTodoSt(null);
     }
   }, [todo, addTodoSt, removedTodoSt, editedTodoSt]);
 
   useEffect(() => {
-    CrudFu("/api/getRequest", "GET");
+    CRUDoperation("/api/getRequest", "GET");
   }, []);
   return (
     <div className="container__grid">
       <Header />
       <TodoAdd
-        addHandleFu={addHandleFu}
-        getDataFu={getDataFu}
-        getDifficultyFu={getDifficultyFu}
+        addTodoItem={addTodoItem}
+        getDataFromInput={getDataFromInput}
+        choosingDifficulty={choosingDifficulty}
         inputNewSt={inputNewSt}
       />
-      <TodoFilter filterHandleFu={filterHandleFu} />
+      <TodoFilter getFilter={getFilter} />
       <Content>
         <TodoList
-          filterTodoList={filterTodoList(todo, selectedFilterSt)}
-          checkHandleFu={checkHandleFu}
-          editConfirmFu={editConfirmFu}
-          editHandleFu={editHandleFu}
-          getDataFu={getDataFu}
-          removeConfirmFu={removeConfirmFu}
-          removeHandleFu={removeHandleFu}
+          todoList={filteringTodoList(todo, selectedFilterSt)}
+          switchingCompleteStatus={switchingCompleteStatus}
+          confirmingEdit={confirmingEdit}
+          switchingEditingMode={switchingEditingMode}
+          getDataFromInput={getDataFromInput}
+          confirmingRemove={confirmingRemove}
+          switchingRemoveMode={switchingRemoveMode}
           inputEditSt={inputEditSt}
         />
       </Content>

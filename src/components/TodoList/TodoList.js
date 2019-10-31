@@ -1,18 +1,18 @@
 import React from "react";
 import Todo from "../Todo/Todo";
 const TodoList = ({
-  filterTodoList,
-  checkHandleFu,
-  editConfirmFu,
-  editHandleFu,
-  getDataFu,
-  removeConfirmFu,
-  removeHandleFu,
+  todoList,
+  switchingCompleteStatus,
+  confirmingEdit,
+  switchingEditingMode,
+  getDataFromInput,
+  confirmingRemove,
+  switchingRemoveMode,
   inputEditSt
 }) => {
   return (
     <>
-      {filterTodoList.map(todo => {
+      {todoList.map(todo => {
         return (
           <Todo
             todoId={todo.id}
@@ -21,12 +21,12 @@ const TodoList = ({
             todoChecked={todo.checked}
             todoDelete={todo.delete}
             todoEdit={todo.edit}
-            checkHandleFu={checkHandleFu}
-            editHandleFu={editHandleFu}
-            editConfirmFu={editConfirmFu}
-            getDataFu={getDataFu}
-            removeHandleFu={removeHandleFu}
-            removeConfirmFu={removeConfirmFu}
+            switchingCompleteStatus={switchingCompleteStatus}
+            switchingEditingMode={switchingEditingMode}
+            confirmingEdit={confirmingEdit}
+            getDataFromInput={getDataFromInput}
+            switchingRemoveMode={switchingRemoveMode}
+            confirmingRemove={confirmingRemove}
             inputEditSt={inputEditSt}
           />
         );
