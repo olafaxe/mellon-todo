@@ -1,5 +1,5 @@
 import React from "react";
-import Todo from "../Todo/Todo";
+import TodoItem from "../TodoItem/TodoItem";
 const TodoList = ({
   todoList,
   switchingCompleteStatus,
@@ -14,7 +14,7 @@ const TodoList = ({
     <>
       {todoList.map(todo => {
         return (
-          <Todo
+          <TodoItem
             todoId={todo.id}
             key={todo.id.toString()}
             todoContent={todo.content}

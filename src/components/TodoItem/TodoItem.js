@@ -1,10 +1,10 @@
 import React from "react";
 import Input from "../Misc/Input/Input";
-import "./Todo.scss";
+import "./TodoItem.scss";
 
 import TodoDelete from "../TodoDelete/TodoDelete";
-import TodoEdit from "../../components/TodoEdit/TodoEdit";
-import TodoContent from "../../components/TodoContent/TodoContent";
+import TodoEdit from "../TodoEdit/TodoEdit";
+import TodoContent from "../TodoContent/TodoContent";
 
 const Todo = ({
   todoId,
@@ -27,14 +27,12 @@ const Todo = ({
       ) : null}
       <div className="todo--content">
         {todoEdit ? (
-          <form>
-            <Input
-              label={"todo--edit"}
-              id={"todo--edit"}
-              getDataFromInput={getDataFromInput}
-              def={inputEditSt}
-            />
-          </form>
+          <Input
+            label={"todo--edit"}
+            id={"todo--edit"}
+            getDataFromInput={getDataFromInput}
+            def={inputEditSt}
+          />
         ) : (
           <TodoContent
             todoChecked={todoChecked}
