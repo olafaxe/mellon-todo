@@ -23,7 +23,9 @@ const TodoList = ({
             todoEdit={todo.edit}
             switchingCompleteStatus={switchingCompleteStatus}
             switchingEditingMode={switchingEditingMode}
-            confirmingEdit={confirmingEdit}
+            confirmingEdit={() => {
+              confirmingEdit(todo.id);
+            }}
             getDataFromInput={getDataFromInput}
             switchingRemoveMode={switchingRemoveMode}
             confirmingRemove={confirmingRemove}

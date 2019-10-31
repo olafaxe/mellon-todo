@@ -23,7 +23,6 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const getFilter = e => {
-    // let upperFilter = e.target.textContent.toUpperCase();
     setSelectedFilterSt(e.target.textContent.toUpperCase());
   };
 
@@ -53,11 +52,8 @@ const App = () => {
       switchingRemoveMode(e);
       return;
     }
-    const newTodos = todo.filter(todo => Number(e.target.id) !== todo.id);
     const removedTodo = todo.filter(todo => Number(e.target.id) === todo.id);
-    // setRemovedTodoSt(removedTodo[0]);
     setRemovedTodoSt(removedTodo[0].id);
-    setTodo(newTodos);
   };
 
   //*************** */
@@ -77,7 +73,7 @@ const App = () => {
 
   const confirmingEdit = e => {
     const editTodo = todo.map(todo => {
-      if (Number(e.target.id) === todo.id) {
+      if (Number(e) === todo.id) {
         todo.edit = !todo.edit;
         todo.content = inputEditSt;
         todo.date = Date.now();
@@ -140,18 +136,16 @@ const App = () => {
   };
 
   const CRUDoperation = async (url, method, body) => {
-    let response = await fetch(url, {
-      method: method,
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" } // *GET, POST, PUT, DELETE, etc.
-    });
-    let data = await response.json();
-    if (method === "GET") {
-      setTodo(prevState => {
-        return [...data];
+    try {
+      let response = await fetch(url, {
+        method: method,
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" }
       });
-    } else if (method === "POST") {
+      let data = await response.json();
       return data;
+    } catch (e) {
+      console.log("hej:", e);
     }
   };
 
@@ -161,11 +155,19 @@ const App = () => {
 
   useEffect(() => {
     if (addTodoSt) {
-      CRUDoperation("/todos", "POST", addTodoSt);
-      setTodo([addTodoSt, ...todo]);
+      CRUDoperation("/todos", "POST", addTodoSt).then(data => {
+        if (data) {
+          setTodo([data, ...todo]);
+        }
+      });
       setAddTodoSt(null);
     } else if (removedTodoSt) {
-      CRUDoperation(`/todos/${removedTodoSt}`, "DELETE");
+      CRUDoperation(`/todos/${removedTodoSt}`, "DELETE").then(data => {
+        if (data) {
+          const newTodos = todo.filter(todo => data !== todo.id);
+          setTodo(newTodos);
+        }
+      });
       setRemovedTodoSt(null);
     } else if (editedTodoSt) {
       CRUDoperation("/todos", "PATCH", editedTodoSt);
@@ -174,7 +176,7 @@ const App = () => {
   }, [todo, addTodoSt, removedTodoSt, editedTodoSt]);
 
   useEffect(() => {
-    CRUDoperation("/todos", "GET");
+    CRUDoperation("/todos", "GET").then(data => setTodo([...data]));
   }, []);
 
   return (

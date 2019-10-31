@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
-
 const port = process.env.PORT || 5000;
 const MongoClient = require("mongodb").MongoClient;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017";
@@ -42,31 +41,34 @@ app.get("/todos", (req, res) => {
 app.post("/todos", (req, res) => {
   const todo = req.body;
   const todoCollection = db.collection("todos");
-
-  todoCollection.insertMany([todo]);
+  todoCollection.insertMany([todo]).then(() => res.send(todo));
 });
 
 app.patch("/todos", (req, res) => {
   //patch
   const todo = req.body;
   const todoCollection = db.collection("todos");
-  todoCollection.replaceOne(
-    { id: todo.id },
-    {
-      id: todo.id,
-      filter: todo.filter,
-      checked: todo.checked,
-      edit: todo.edit,
-      delete: todo.delete,
-      content: todo.content,
-      date: todo.date
-    }
-  );
+  todoCollection
+    .replaceOne(
+      { id: todo.id },
+      {
+        id: todo.id,
+        filter: todo.filter,
+        checked: todo.checked,
+        edit: todo.edit,
+        delete: todo.delete,
+        content: todo.content,
+        date: todo.date
+      }
+    )
+    .then(() => res.send(todo));
 });
 
 app.delete("/todos/:id", (req, res) => {
   const todoCollection = db.collection("todos");
-  todoCollection.deleteMany({ id: Number(req.params.id) });
+  todoCollection
+    .deleteMany({ id: Number(req.params.id) })
+    .then(() => res.send(req.params.id));
 });
 
 app.get("*", (req, res) => {
