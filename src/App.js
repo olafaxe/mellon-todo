@@ -23,6 +23,7 @@ const App = () => {
   //*********FILTER */
   //*************** */
   const getFilter = e => {
+    // let upperFilter = e.target.textContent.toUpperCase();
     setSelectedFilterSt(e.target.textContent.toUpperCase());
   };
 
@@ -72,6 +73,7 @@ const App = () => {
   };
 
   const confirmingEdit = e => {
+    console.log(e);
     const editTodo = todo.map(todo => {
       if (Number(e) === todo.id) {
         todo.edit = !todo.edit;
@@ -155,11 +157,9 @@ const App = () => {
 
   useEffect(() => {
     if (addTodoSt) {
-      CRUDoperation("/todos", "POST", addTodoSt).then(data => {
-        if (data) {
-          setTodo([data, ...todo]);
-        }
-      });
+      CRUDoperation("/todos", "POST", addTodoSt).then(data =>
+        setTodo([data, ...todo])
+      );
       setAddTodoSt(null);
     } else if (removedTodoSt) {
       CRUDoperation(`/todos/${removedTodoSt}`, "DELETE").then(data => {
