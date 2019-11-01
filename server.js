@@ -16,9 +16,7 @@ let db;
 
 client.connect(function(err) {
   if (err) throw err;
-  //users is the name of the collection from the db document
   db = client.db("heroku_24b4q4wg");
-  // db = client.db("mellontodo");
 });
 
 app.use(
@@ -39,10 +37,23 @@ app.get("/todos", (req, res) => {
     });
 });
 
+app.get("/filters", (req, res) => {
+  const filterCollection = db.collection("filters");
+  filterCollection.find({}).toArray((err, filter) => {
+    res.send(filter);
+  });
+});
+
 app.post("/todos", (req, res) => {
   const todo = req.body;
   const todoCollection = db.collection("todos");
   todoCollection.insertMany([todo]).then(() => res.send(todo));
+});
+
+app.post("/filters", (req, res) => {
+  const filter = req.body;
+  const filterCollection = db.collection("filters");
+  filterCollection.insertMany([filter]).then(() => res.send(filter));
 });
 
 app.patch("/todos", (req, res) => {

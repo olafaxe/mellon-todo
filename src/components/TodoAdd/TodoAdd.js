@@ -7,8 +7,9 @@ import "./TodoAdd.scss";
 const TodoAdd = ({
   addTodoItem,
   getDataFromInput,
-  choosingDifficulty,
-  inputFromAdding
+  getDataFromSelector,
+  inputFromAdding,
+  avaibleFilters
 }) => {
   return (
     <div className="container__add">
@@ -20,11 +21,15 @@ const TodoAdd = ({
             getDataFromInput={getDataFromInput}
             def={inputFromAdding}
           />
-          <Selector
-            label={"taskdiff"}
-            id={"taskdiff"}
-            choosingDifficulty={choosingDifficulty}
-          />
+          {avaibleFilters ? (
+            <Selector
+              label={"taskdiff"}
+              id={"taskdiff"}
+              getDataFromSelector={getDataFromSelector}
+              avaibleFilters={avaibleFilters}
+            />
+          ) : null}
+
           <Button
             buttonAction={addTodoItem}
             type={"Seed"}

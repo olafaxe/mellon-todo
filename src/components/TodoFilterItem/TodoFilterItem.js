@@ -1,11 +1,13 @@
 import React from "react";
 
-const TodoFilterItem = ({ selectFunction, filter }) => {
+const TodoFilterItem = ({ getFilter, filter, canRemoveFilter }) => {
   return (
-    <div onClick={selectFunction} className="filter--content">
+    <div onClick={getFilter} className="filter--content">
       <p>{filter}</p>
     </div>
   );
 };
 
 export default TodoFilterItem;
+
+//onClick={confirmingRemoveFilter}

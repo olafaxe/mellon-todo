@@ -18,6 +18,7 @@
   // box-shadow: 2px -2px 0px 0px #01661d;
   background-color: 2px solid #c4d8cb;
   margin-bottom: 5px;
+  position: relative;
 }
 
 .filter--content {
@@ -49,4 +50,12 @@
   p {
     color: #caf13c;
   }
+}
+
+#add--filter {
+  flex: 1;
+}
+
+.filter--btns {
+  flex: 1;
 }

@@ -9,7 +9,7 @@ const TodoFilter = ({ getFilter, avaibleFilters }) => {
         {avaibleFilters.map(item => {
           return (
             <TodoFilterItem
-              selectFunction={() => getFilter(item.filter)}
+              getFilter={() => getFilter(item)}
               key={item.filter.toString()}
               filter={item.filter}
             />

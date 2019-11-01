@@ -10,40 +10,47 @@ import "./sass/Style.scss";
 import "./sass/Grid.scss";
 
 const App = () => {
-  const [todo, setTodo] = useState([]);
+  const [avaibleTodos, setAvaibleTodos] = useState(null);
+  const [avaibleFilters, setAvaibleFilters] = useState(null);
   const [inputFromAdding, SetInputFromAdding] = useState("");
   const [inputFromEditing, setInputFromEditing] = useState("");
-  const [todoDifficultySt, setTodoDifficultySt] = useState("EASY");
-  const [selectedFilterSt, setSelectedFilterSt] = useState("ALL");
-  const [avaibleFilters, setAvaibleFilters] = useState([
-    { filter: "All" },
-    { filter: "Easy" },
-    { filter: "Hard" },
-    { filter: "Completed" }
-  ]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("EASY");
 
   /// FILTERING TODO LIST
-  const getFilter = e => {
-    setSelectedFilterSt(e.toUpperCase());
+  const getFilter = item => {
+    const newFilters = avaibleFilters.map(filter => {
+      filter.status = false;
+      if (item.filter === filter.filter) {
+        filter.status = !filter.status;
+      }
+      return filter;
+    });
+    setAvaibleFilters(newFilters);
   };
 
-  const gettingTodoList = (todos, filter) => {
-    if (filter === "ALL") {
+  const gettingTodoList = todos => {
+    let currentFilter = avaibleFilters.filter(item => item.status === true);
+    if (currentFilter[0].filter === "All") {
       return todos.filter(todo => todo.filter !== "COMPLETED");
     }
-    return todos.filter(todo => todo.filter === filter);
+    return todos.filter(
+      todo =>
+        todo.filter === currentFilter[0].filter ||
+        todo.filter === currentFilter[0].filter.toUpperCase()
+    );
   };
 
   /// DELETING A TODO ITEM
   const switchingRemoveMode = e => {
-    const deleteTodo = todo.map(todo => {
+    const deleteTodo = avaibleTodos.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.delete = !todo.delete;
         return todo;
       }
       return todo;
     });
-    setTodo(deleteTodo);
+    setAvaibleTodos(deleteTodo);
   };
 
   const confirmingRemove = e => {
@@ -51,11 +58,13 @@ const App = () => {
       switchingRemoveMode(e);
       return;
     }
-    const removedTodo = todo.filter(todo => Number(e.target.id) === todo.id);
-    deletingData(`/todos/${removedTodo[0].id}`, "DELETE").then(data => {
+    const removedTodo = avaibleTodos.filter(
+      todo => Number(e.target.id) === todo.id
+    );
+    deletingData(`/todos/${removedTodo[0].id}`).then(data => {
       if (data) {
-        const newTodos = todo.filter(todo => data !== todo.id);
-        setTodo(newTodos);
+        const newTodos = avaibleTodos.filter(todo => data !== todo.id);
+        setAvaibleTodos(newTodos);
       } else {
         console.log("Whoops! Someone done ola-coding!");
       }
@@ -64,7 +73,11 @@ const App = () => {
 
   /// EDITING TODO ITEM
   const switchingEditingMode = e => {
-    const editTodo = todo.map(todo => {
+    if (isEditing) {
+      return;
+    }
+    setIsEditing(true);
+    const editTodo = avaibleTodos.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
         setInputFromEditing(todo.content);
@@ -72,12 +85,13 @@ const App = () => {
       }
       return todo;
     });
-    setTodo(editTodo);
+    setAvaibleTodos(editTodo);
   };
 
   const confirmingEdit = e => {
+    setIsEditing(false);
     let editedTodo;
-    let newTodos = todo.map(todo => {
+    let newTodos = avaibleTodos.map(todo => {
       if (Number(e) === todo.id) {
         todo.edit = !todo.edit;
         todo.content = inputFromEditing;
@@ -88,14 +102,16 @@ const App = () => {
       return todo;
     });
     sendingData("/todos", "PATCH", editedTodo).then(data =>
-      data ? setTodo(newTodos) : console.log("Whoops! Someone done ola-coding!")
+      data
+        ? setAvaibleTodos(newTodos)
+        : console.log("Whoops! Someone done ola-coding!")
     );
   };
 
   /// COMPLETING TODO ITEM
   const switchingCompleteStatus = e => {
     let checkedTodo;
-    let newTodos = todo.map(todo => {
+    let newTodos = avaibleTodos.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
         todo.filter = todo.filter !== "COMPLETED" ? "COMPLETED" : "ALL";
@@ -105,7 +121,9 @@ const App = () => {
       return todo;
     });
     sendingData("/todos", "PATCH", checkedTodo).then(data =>
-      data ? setTodo(newTodos) : console.log("Whoops! Someone done ola-coding!")
+      data
+        ? setAvaibleTodos(newTodos)
+        : console.log("Whoops! Someone done ola-coding!")
     );
   };
 
@@ -117,7 +135,7 @@ const App = () => {
     } else {
       let todoItem = {
         id: Math.floor(Math.random(36) * 100000000000),
-        filter: todoDifficultySt,
+        filter: selectedFilter,
         checked: false,
         edit: false,
         content: inputFromAdding,
@@ -125,7 +143,7 @@ const App = () => {
       };
       sendingData("/todos", "POST", todoItem).then(data =>
         data
-          ? setTodo([data, ...todo])
+          ? setAvaibleTodos([data, ...avaibleTodos])
           : console.log("Whoops! Someone done ola-coding!")
       );
     }
@@ -134,15 +152,17 @@ const App = () => {
 
   /// GETTING DATA FROM INPUT FIELDS
   const getDataFromInput = e => {
+    console.log(e.target);
     if (e.target.id === "todo--edit") {
       setInputFromEditing(e.target.value);
-    } else {
+    }
+    if (e.target.id === "taskname") {
       SetInputFromAdding(e.target.value);
     }
   };
 
-  const choosingDifficulty = e => {
-    setTodoDifficultySt(e.target.value.toUpperCase());
+  const getDataFromSelector = e => {
+    setSelectedFilter(e.target.value);
   };
 
   /// HTTP REQUESTS
@@ -157,10 +177,10 @@ const App = () => {
     }
   };
 
-  const deletingData = async (url, method) => {
+  const deletingData = async url => {
     try {
       let res = await fetch(url, {
-        method: method
+        method: "DELETE"
       });
       let data = await res.json();
       return data;
@@ -171,45 +191,70 @@ const App = () => {
   };
 
   const sendingData = async (url, method, body) => {
-    let res = await fetch(url, {
-      method: method,
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" }
-    });
-    let data = await res.json();
-    return data;
+    try {
+      let res = await fetch(url, {
+        method: method,
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" }
+      });
+      let data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
 
   /// COMPONENT DID MOUNT
   useEffect(() => {
-    gettingData("/todos").then(data =>
-      data
-        ? setTodo([...data])
-        : console.log("Whoops! Someone done ola-coding!")
-    );
+    gettingData("/filters")
+      .then(data => {
+        data
+          ? setAvaibleFilters([...data])
+          : console.log("Whoops! Someone done ola-coding!");
+      })
+      .then(() => {
+        gettingData("/todos").then(data =>
+          data
+            ? setAvaibleTodos([...data])
+            : console.log("Whoops! Someone done ola-coding!")
+        );
+      });
   }, []);
 
+  console.log(avaibleFilters);
+  console.log(avaibleTodos);
   return (
     <div className="container__grid">
       <Header />
       <TodoAdd
         addTodoItem={addTodoItem}
         getDataFromInput={getDataFromInput}
-        choosingDifficulty={choosingDifficulty}
+        getDataFromSelector={getDataFromSelector}
         inputFromAdding={inputFromAdding}
+        avaibleFilters={avaibleFilters}
       />
-      <TodoFilter getFilter={getFilter} avaibleFilters={avaibleFilters} />
-      <Content>
-        <TodoList
-          todoList={gettingTodoList(todo, selectedFilterSt)}
-          switchingCompleteStatus={switchingCompleteStatus}
-          confirmingEdit={confirmingEdit}
-          switchingEditingMode={switchingEditingMode}
+      {avaibleFilters ? (
+        <TodoFilter
+          getFilter={getFilter}
+          avaibleFilters={avaibleFilters}
           getDataFromInput={getDataFromInput}
-          confirmingRemove={confirmingRemove}
-          switchingRemoveMode={switchingRemoveMode}
-          inputFromEditing={inputFromEditing}
         />
+      ) : null}
+
+      <Content>
+        {avaibleTodos ? (
+          <TodoList
+            todoList={gettingTodoList(avaibleTodos)}
+            switchingCompleteStatus={switchingCompleteStatus}
+            confirmingEdit={confirmingEdit}
+            switchingEditingMode={switchingEditingMode}
+            getDataFromInput={getDataFromInput}
+            confirmingRemove={confirmingRemove}
+            switchingRemoveMode={switchingRemoveMode}
+            inputFromEditing={inputFromEditing}
+          />
+        ) : null}
       </Content>
       <Footer />
     </div>
