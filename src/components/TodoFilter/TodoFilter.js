@@ -1,22 +1,20 @@
 import React from "react";
+import TodoFilterItem from "../TodoFilterItem/TodoFilterItem";
 import "./TodoFilter.scss";
 
-const TodoFilter = ({ getFilter }) => {
+const TodoFilter = ({ getFilter, avaibleFilters }) => {
   return (
     <div className="container__filter">
-      <div onClick={getFilter} className="filter__container">
-        <div className="filter--content">
-          <p>All</p>
-        </div>
-        <div className="filter--content">
-          <p>Easy</p>
-        </div>
-        <div className="filter--content">
-          <p>Hard</p>
-        </div>
-        <div className="filter--content">
-          <p>Completed</p>
-        </div>
+      <div className="filter__container">
+        {avaibleFilters.map(item => {
+          return (
+            <TodoFilterItem
+              selectFunction={() => getFilter(item.filter)}
+              key={item.filter.toString()}
+              filter={item.filter}
+            />
+          );
+        })}
       </div>
     </div>
   );

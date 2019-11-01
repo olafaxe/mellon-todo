@@ -11,32 +11,30 @@ import "./sass/Grid.scss";
 
 const App = () => {
   const [todo, setTodo] = useState([]);
-  const [isTodoAdded, setIsTodoAdded] = useState(null);
-  const [removedTodoSt, setRemovedTodoSt] = useState(null);
-  const [editedTodoSt, setEditedTodoSt] = useState(null);
-  const [isTodoChecked, setIsTodoChecked] = useState(null);
-  const [inputNewSt, setInputNewSt] = useState("");
-  const [inputEditSt, setInputEditSt] = useState("");
+  const [inputFromAdding, SetInputFromAdding] = useState("");
+  const [inputFromEditing, setInputFromEditing] = useState("");
   const [todoDifficultySt, setTodoDifficultySt] = useState("EASY");
   const [selectedFilterSt, setSelectedFilterSt] = useState("ALL");
+  const [avaibleFilters, setAvaibleFilters] = useState([
+    { filter: "All" },
+    { filter: "Easy" },
+    { filter: "Hard" },
+    { filter: "Completed" }
+  ]);
 
-  //*************** */
-  //*********FILTER */
-  //*************** */
+  /// FILTERING TODO LIST
   const getFilter = e => {
-    setSelectedFilterSt(e.target.textContent.toUpperCase());
+    setSelectedFilterSt(e.toUpperCase());
   };
 
-  const filteringTodoList = (todos, filter) => {
+  const gettingTodoList = (todos, filter) => {
     if (filter === "ALL") {
       return todos.filter(todo => todo.filter !== "COMPLETED");
     }
     return todos.filter(todo => todo.filter === filter);
   };
 
-  //*************** */
-  //*********DELETE */
-  //*************** */
+  /// DELETING A TODO ITEM
   const switchingRemoveMode = e => {
     const deleteTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
@@ -54,17 +52,22 @@ const App = () => {
       return;
     }
     const removedTodo = todo.filter(todo => Number(e.target.id) === todo.id);
-    setRemovedTodoSt(removedTodo[0].id);
+    deletingData(`/todos/${removedTodo[0].id}`, "DELETE").then(data => {
+      if (data) {
+        const newTodos = todo.filter(todo => data !== todo.id);
+        setTodo(newTodos);
+      } else {
+        console.log("Whoops! Someone done ola-coding!");
+      }
+    });
   };
 
-  //*************** */
-  //*********EDIT ***/
-  //*************** */
+  /// EDITING TODO ITEM
   const switchingEditingMode = e => {
     const editTodo = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.edit = !todo.edit;
-        setInputEditSt(todo.content);
+        setInputFromEditing(todo.content);
         return todo;
       }
       return todo;
@@ -73,59 +76,68 @@ const App = () => {
   };
 
   const confirmingEdit = e => {
-    return todo.map(todo => {
+    let editedTodo;
+    let newTodos = todo.map(todo => {
       if (Number(e) === todo.id) {
         todo.edit = !todo.edit;
-        todo.content = inputEditSt;
+        todo.content = inputFromEditing;
         todo.date = Date.now();
-        setEditedTodoSt(todo);
+        editedTodo = todo;
+        return todo;
       }
       return todo;
     });
+    sendingData("/todos", "PATCH", editedTodo).then(data =>
+      data ? setTodo(newTodos) : console.log("Whoops! Someone done ola-coding!")
+    );
   };
 
-  //*************** */
-  //*********CHECK */
-  //*************** */
+  /// COMPLETING TODO ITEM
   const switchingCompleteStatus = e => {
-    return todo.map(todo => {
+    let checkedTodo;
+    let newTodos = todo.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
         todo.filter = todo.filter !== "COMPLETED" ? "COMPLETED" : "ALL";
-        setIsTodoChecked(todo);
+        checkedTodo = todo;
+        return todo;
       }
       return todo;
     });
+    sendingData("/todos", "PATCH", checkedTodo).then(data =>
+      data ? setTodo(newTodos) : console.log("Whoops! Someone done ola-coding!")
+    );
   };
 
-  //*************** */
-  //*********ADDING */
-  //*************** */
+  /// ADDING TODO ITEM
   const addTodoItem = e => {
     e.preventDefault();
-    if (!inputNewSt) {
+    if (!inputFromAdding) {
       return;
     } else {
-      setIsTodoAdded({
+      let todoItem = {
         id: Math.floor(Math.random(36) * 100000000000),
         filter: todoDifficultySt,
         checked: false,
         edit: false,
-        content: inputNewSt,
+        content: inputFromAdding,
         date: Date.now()
-      });
-      setInputNewSt("");
+      };
+      sendingData("/todos", "POST", todoItem).then(data =>
+        data
+          ? setTodo([data, ...todo])
+          : console.log("Whoops! Someone done ola-coding!")
+      );
     }
+    SetInputFromAdding("");
   };
 
-  //*************** */
-  //*********DATA ***/
-  //*************** */
+  /// GETTING DATA FROM INPUT FIELDS
   const getDataFromInput = e => {
     if (e.target.id === "todo--edit") {
-      setInputEditSt(e.target.value);
+      setInputFromEditing(e.target.value);
     } else {
-      setInputNewSt(e.target.value);
+      SetInputFromAdding(e.target.value);
     }
   };
 
@@ -133,49 +145,48 @@ const App = () => {
     setTodoDifficultySt(e.target.value.toUpperCase());
   };
 
-  //*************** */
-  //---- HTTP  ---- */
-  //*************** */
-
-  const CRUDoperation = async (url, method, body) => {
+  /// HTTP REQUESTS
+  const gettingData = async url => {
     try {
-      let response = await fetch(url, {
-        method: method,
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" }
-      });
-      let data = await response.json();
+      let res = await fetch(url);
+      let data = await res.json();
       return data;
-    } catch (e) {
-      return e;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   };
 
-  useEffect(() => {
-    if (isTodoAdded) {
-      CRUDoperation("/todos", "POST", isTodoAdded).then(data =>
-        data ? setTodo([data, ...todo]) : null
-      );
-      setIsTodoAdded(null);
-    } else if (removedTodoSt) {
-      CRUDoperation(`/todos/${removedTodoSt}`, "DELETE").then(data => {
-        if (data) {
-          const newTodos = todo.filter(todo => data !== todo.id);
-          setTodo(newTodos);
-        }
+  const deletingData = async (url, method) => {
+    try {
+      let res = await fetch(url, {
+        method: method
       });
-      setRemovedTodoSt(null);
-    } else if (editedTodoSt) {
-      CRUDoperation("/todos", "PATCH", editedTodoSt);
-      setEditedTodoSt(null);
-    } else if (isTodoChecked) {
-      CRUDoperation("/todos", "PATCH", isTodoChecked);
-      setIsTodoChecked(null);
+      let data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
-  }, [todo, isTodoAdded, removedTodoSt, editedTodoSt, isTodoChecked]);
+  };
 
+  const sendingData = async (url, method, body) => {
+    let res = await fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    });
+    let data = await res.json();
+    return data;
+  };
+
+  /// COMPONENT DID MOUNT
   useEffect(() => {
-    CRUDoperation("/todos", "GET").then(data => setTodo([...data]));
+    gettingData("/todos").then(data =>
+      data
+        ? setTodo([...data])
+        : console.log("Whoops! Someone done ola-coding!")
+    );
   }, []);
 
   return (
@@ -185,19 +196,19 @@ const App = () => {
         addTodoItem={addTodoItem}
         getDataFromInput={getDataFromInput}
         choosingDifficulty={choosingDifficulty}
-        inputNewSt={inputNewSt}
+        inputFromAdding={inputFromAdding}
       />
-      <TodoFilter getFilter={getFilter} />
+      <TodoFilter getFilter={getFilter} avaibleFilters={avaibleFilters} />
       <Content>
         <TodoList
-          todoList={filteringTodoList(todo, selectedFilterSt)}
+          todoList={gettingTodoList(todo, selectedFilterSt)}
           switchingCompleteStatus={switchingCompleteStatus}
           confirmingEdit={confirmingEdit}
           switchingEditingMode={switchingEditingMode}
           getDataFromInput={getDataFromInput}
           confirmingRemove={confirmingRemove}
           switchingRemoveMode={switchingRemoveMode}
-          inputEditSt={inputEditSt}
+          inputFromEditing={inputFromEditing}
         />
       </Content>
       <Footer />

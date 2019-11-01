@@ -18,7 +18,7 @@ const TodoItem = ({
   confirmingRemove,
   switchingEditingMode,
   confirmingEdit,
-  inputEditSt
+  inputFromEditing
 }) => {
   return (
     <div className="container__todo" key={todoId.toString()} id={todoId}>
@@ -31,7 +31,7 @@ const TodoItem = ({
             label={"todo--edit"}
             id={"todo--edit"}
             getDataFromInput={getDataFromInput}
-            def={inputEditSt}
+            def={inputFromEditing}
           />
         ) : (
           <TodoContent

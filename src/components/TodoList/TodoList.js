@@ -8,7 +8,7 @@ const TodoList = ({
   getDataFromInput,
   confirmingRemove,
   switchingRemoveMode,
-  inputEditSt
+  inputFromEditing
 }) => {
   return (
     <>
@@ -29,7 +29,7 @@ const TodoList = ({
             getDataFromInput={getDataFromInput}
             switchingRemoveMode={switchingRemoveMode}
             confirmingRemove={confirmingRemove}
-            inputEditSt={inputEditSt}
+            inputFromEditing={inputFromEditing}
           />
         );
       })}

@@ -8,7 +8,7 @@ const TodoAdd = ({
   addTodoItem,
   getDataFromInput,
   choosingDifficulty,
-  inputNewSt
+  inputFromAdding
 }) => {
   return (
     <div className="container__add">
@@ -18,7 +18,7 @@ const TodoAdd = ({
             label={"taskname"}
             id={"taskname"}
             getDataFromInput={getDataFromInput}
-            def={inputNewSt}
+            def={inputFromAdding}
           />
           <Selector
             label={"taskdiff"}
