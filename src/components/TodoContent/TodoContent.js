@@ -3,17 +3,17 @@ import React from "react";
 const TodoContent = ({
   todoChecked,
   todoId,
-  switchingCompleteStatus,
+  settingTodoToChecked,
   todoContent
 }) => {
   return (
     <>
       {!todoChecked ? (
-        <p onClick={switchingCompleteStatus} id={todoId}>
+        <p onClick={settingTodoToChecked} id={todoId}>
           {todoContent}
         </p>
       ) : (
-        <s onClick={switchingCompleteStatus} id={todoId}>
+        <s onClick={settingTodoToChecked} id={todoId}>
           {todoContent}
         </s>
       )}

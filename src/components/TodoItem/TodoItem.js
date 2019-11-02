@@ -12,7 +12,7 @@ const TodoItem = ({
   todoChecked,
   todoDelete,
   todoEdit,
-  switchingCompleteStatus,
+  settingTodoToChecked,
   getDataFromInput,
   switchingRemoveMode,
   confirmingRemove,
@@ -37,7 +37,7 @@ const TodoItem = ({
           <TodoContent
             todoChecked={todoChecked}
             todoId={todoId}
-            switchingCompleteStatus={switchingCompleteStatus}
+            settingTodoToChecked={settingTodoToChecked}
             todoContent={todoContent}
           />
         )}

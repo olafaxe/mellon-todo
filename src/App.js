@@ -108,7 +108,7 @@ const App = () => {
   };
 
   /// COMPLETING TODO ITEM
-  const switchingCompleteStatus = e => {
+  const settingTodoToChecked = e => {
     let checkedTodo;
     let newTodos = avaibleTodos.map(todo => {
       if (Number(e.target.id) === todo.id) {
@@ -151,7 +151,6 @@ const App = () => {
 
   /// GETTING DATA FROM INPUT FIELDS
   const getDataFromInput = e => {
-    console.log(e.target);
     if (e.target.id === "todo--edit") {
       setInputFromEditing(e.target.value);
     }
@@ -208,21 +207,26 @@ const App = () => {
   useEffect(() => {
     gettingData("/filters")
       .then(data => {
-        data
-          ? setAvaibleFilters([...data])
-          : console.log("Whoops! Someone done ola-coding!");
+        if (data) {
+          setAvaibleFilters([...data]);
+          return "OK";
+        } else {
+          return null;
+        }
       })
-      .then(() => {
-        gettingData("/todos").then(data =>
-          data
-            ? setAvaibleTodos([...data])
-            : console.log("Whoops! Someone done ola-coding!")
-        );
+      .then(res => {
+        !res
+          ? console.log("ERROR getting filter data! Aborting...")
+          : gettingData("/todos").then(data =>
+              data
+                ? setAvaibleTodos([...data])
+                : console.log("ERROR getting todo data! Aborting...")
+            );
       });
   }, []);
 
-  console.log(avaibleFilters);
-  console.log(avaibleTodos);
+  // console.log(avaibleFilters);
+  // console.log(avaibleTodos);
   return (
     <div className="container__grid">
       <Header />
@@ -244,12 +248,12 @@ const App = () => {
       {avaibleTodos ? (
         <TodoList
           todoList={gettingTodoList(avaibleTodos)}
-          switchingCompleteStatus={switchingCompleteStatus}
+          settingTodoToChecked={settingTodoToChecked}
           confirmingEdit={confirmingEdit}
-          switchingEditingMode={switchingEditingMode}
-          getDataFromInput={getDataFromInput}
           confirmingRemove={confirmingRemove}
+          switchingEditingMode={switchingEditingMode}
           switchingRemoveMode={switchingRemoveMode}
+          getDataFromInput={getDataFromInput}
           inputFromEditing={inputFromEditing}
         />
       ) : null}

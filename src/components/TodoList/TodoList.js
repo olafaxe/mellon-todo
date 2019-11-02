@@ -3,7 +3,7 @@ import TodoItem from "../TodoItem/TodoItem";
 import "./TodoList.scss";
 const TodoList = ({
   todoList,
-  switchingCompleteStatus,
+  settingTodoToChecked,
   confirmingEdit,
   switchingEditingMode,
   getDataFromInput,
@@ -22,7 +22,7 @@ const TodoList = ({
             todoChecked={todo.checked}
             todoDelete={todo.delete}
             todoEdit={todo.edit}
-            switchingCompleteStatus={switchingCompleteStatus}
+            settingTodoToChecked={settingTodoToChecked}
             switchingEditingMode={switchingEditingMode}
             confirmingEdit={() => {
               confirmingEdit(todo.id);
