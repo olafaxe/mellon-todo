@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Content from "./components/Content/Content";
 import TodoList from "./components/TodoList/TodoList";
 import TodoFilter from "./components/TodoFilter/TodoFilter";
 import TodoAdd from "./components/TodoAdd/TodoAdd";
@@ -242,20 +241,18 @@ const App = () => {
         />
       ) : null}
 
-      <Content>
-        {avaibleTodos ? (
-          <TodoList
-            todoList={gettingTodoList(avaibleTodos)}
-            switchingCompleteStatus={switchingCompleteStatus}
-            confirmingEdit={confirmingEdit}
-            switchingEditingMode={switchingEditingMode}
-            getDataFromInput={getDataFromInput}
-            confirmingRemove={confirmingRemove}
-            switchingRemoveMode={switchingRemoveMode}
-            inputFromEditing={inputFromEditing}
-          />
-        ) : null}
-      </Content>
+      {avaibleTodos ? (
+        <TodoList
+          todoList={gettingTodoList(avaibleTodos)}
+          switchingCompleteStatus={switchingCompleteStatus}
+          confirmingEdit={confirmingEdit}
+          switchingEditingMode={switchingEditingMode}
+          getDataFromInput={getDataFromInput}
+          confirmingRemove={confirmingRemove}
+          switchingRemoveMode={switchingRemoveMode}
+          inputFromEditing={inputFromEditing}
+        />
+      ) : null}
       <Footer />
     </div>
   );

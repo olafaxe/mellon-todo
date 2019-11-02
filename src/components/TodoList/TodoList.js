@@ -1,5 +1,6 @@
 import React from "react";
 import TodoItem from "../TodoItem/TodoItem";
+import "./TodoList.scss";
 const TodoList = ({
   todoList,
   switchingCompleteStatus,
@@ -11,7 +12,7 @@ const TodoList = ({
   inputFromEditing
 }) => {
   return (
-    <>
+    <div className="container__todolist">
       {todoList.map(todo => {
         return (
           <TodoItem
@@ -33,7 +34,7 @@ const TodoList = ({
           />
         );
       })}
-    </>
+    </div>
   );
 };
 
