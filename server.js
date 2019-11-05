@@ -56,13 +56,13 @@ app.post("/filters", (req, res) => {
   filterCollection.insertMany([filter]).then(() => res.send(filter));
 });
 
-app.patch("/todos", (req, res) => {
-  //patch
+app.put("/todos/:id", (req, res) => {
+  //put
   const todo = req.body;
   const todoCollection = db.collection("todos");
   todoCollection
     .replaceOne(
-      { id: todo.id },
+      { id: Number(req.params.id) },
       {
         id: todo.id,
         filter: todo.filter,
@@ -74,6 +74,21 @@ app.patch("/todos", (req, res) => {
       }
     )
     .then(() => res.send(todo));
+});
+
+app.patch("/todos/:id", (req, res) => {
+  const checked = req.body.checked;
+  const todoCollection = db.collection("todos");
+  todoCollection
+    .update(
+      { id: Number(req.params.id) },
+      {
+        $set: {
+          checked: checked
+        }
+      }
+    )
+    .then(() => res.send(checked));
 });
 
 app.delete("/todos/:id", (req, res) => {

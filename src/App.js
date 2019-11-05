@@ -14,7 +14,7 @@ const App = () => {
   const [inputFromAdding, SetInputFromAdding] = useState("");
   const [inputFromEditing, setInputFromEditing] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("EASY");
+  const [selectedFilter, setSelectedFilter] = useState("Easy");
 
   /// FILTERING TODO LIST
   const getFilter = item => {
@@ -31,12 +31,13 @@ const App = () => {
   const gettingTodoList = todos => {
     let currentFilter = avaibleFilters.filter(item => item.status === true);
     if (currentFilter[0].filter === "All") {
-      return todos.filter(todo => todo.filter !== "COMPLETED");
+      return todos.filter(todo => todo.checked !== true);
+    }
+    if (currentFilter[0].filter === "Completed") {
+      return todos.filter(todo => todo.checked === true);
     }
     return todos.filter(
-      todo =>
-        todo.filter === currentFilter[0].filter ||
-        todo.filter === currentFilter[0].filter.toUpperCase()
+      todo => todo.filter === currentFilter[0].filter && todo.checked !== true
     );
   };
 
@@ -100,27 +101,26 @@ const App = () => {
       }
       return todo;
     });
-    sendingData("/todos", "PATCH", editedTodo).then(data =>
+    sendingData(`/todos/${editedTodo.id}`, "PUT", editedTodo).then(data =>
       data
         ? setAvaibleTodos(newTodos)
         : console.log("Whoops! Someone done ola-coding!")
     );
   };
 
-  /// COMPLETING TODO ITEM
+  // COMPLETING TODO ITEM
   const settingTodoToChecked = e => {
     let checkedTodo;
     let newTodos = avaibleTodos.map(todo => {
       if (Number(e.target.id) === todo.id) {
         todo.checked = !todo.checked;
-        todo.filter = todo.filter !== "COMPLETED" ? "COMPLETED" : "ALL";
         checkedTodo = todo;
         return todo;
       }
       return todo;
     });
-    sendingData("/todos", "PATCH", checkedTodo).then(data =>
-      data
+    sendingData(`/todos/${checkedTodo.id}`, "PATCH", checkedTodo).then(data =>
+      data !== null
         ? setAvaibleTodos(newTodos)
         : console.log("Whoops! Someone done ola-coding!")
     );
