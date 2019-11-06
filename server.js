@@ -29,12 +29,9 @@ app.use(bodyParser.json());
 
 app.get("/todos", (req, res) => {
   const todoCollection = db.collection("todos");
-  todoCollection
-    .find({})
-    .sort({ date: -1 })
-    .toArray(function(err, todo) {
-      res.send(todo);
-    });
+  todoCollection.find({}).toArray(function(err, todo) {
+    res.send(todo);
+  });
 });
 
 app.get("/filters", (req, res) => {

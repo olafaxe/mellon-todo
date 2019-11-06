@@ -217,16 +217,17 @@ const App = () => {
       .then(res => {
         !res
           ? console.log("ERROR getting filter data! Aborting...")
-          : gettingData("/todos").then(data =>
-              data
-                ? setAvaibleTodos([...data])
-                : console.log("ERROR getting todo data! Aborting...")
-            );
+          : gettingData("/todos").then(data => {
+              if (data) {
+                const sortedTodos = data.sort((a, b) => b.date - a.date);
+                setAvaibleTodos([...sortedTodos]);
+              } else {
+                console.log("ERROR getting todo data! Aborting...");
+              }
+            });
       });
   }, []);
 
-  // console.log(avaibleFilters);
-  // console.log(avaibleTodos);
   return (
     <div className="container__grid">
       <Header />
